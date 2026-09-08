@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
 
           theme: ThemeData(
-            textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
+            textTheme: Typography.blackMountainView.apply(fontSizeFactor: 1.sp),
           ),
           routerConfig: RoutConfig.goRouter,
         );

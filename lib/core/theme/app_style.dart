@@ -1,46 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:tayf/core/theme/app_fonts.dart';
 
 class AppStyle {
   // Existing styles
-  static TextStyle headerTitle20meduim = GoogleFonts.inter(
-    fontSize: 20.sp,
+  static TextStyle yellow22ExtraBold = AppFonts.geist.copyWith(
+    fontSize: 22.sp,
+    fontWeight: FontWeight.w800,
+    color: const Color(0xffF59E0B),
+  );
+
+  static TextStyle gray22Regular = AppFonts.geist.copyWith(
+    fontSize: 22.sp,
     fontWeight: FontWeight.w500,
-    color: Color(0xffF8F8F8),
+    color: const Color(0xffF59E0B),
   );
 
-  static TextStyle headerTitle20Regular = GoogleFonts.inter(
-    fontSize: 20.sp,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xffE3DFDB),
-    fontStyle: FontStyle.normal,
-  );
-
-  static TextStyle headerTitle14SimiBold = GoogleFonts.inter(
-    fontSize: 14.sp,
-    fontWeight: FontWeight.w600,
-    color: Colors.black,
-  );
-
-  static TextStyle headerTitle40Bold = GoogleFonts.inter(
-    fontSize: 40.sp,
+  static TextStyle headerTitle18Bold = AppFonts.geist.copyWith(
+    fontSize: 18.sp,
     fontWeight: FontWeight.w700,
-    color: const Color(0xffFAFAF9),
-    fontStyle: FontStyle.normal,
+    color: const Color(0xffF9FAFB),
   );
 
   // Onboarding-specific styles (white text for dark backgrounds)
-  static TextStyle whiteBold28 = GoogleFonts.inter(
+  static TextStyle whiteBold28 = AppFonts.geist.copyWith(
     fontSize: 28.sp,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
 
-  static TextStyle whiteMedium16 = GoogleFonts.inter(
+  static TextStyle graySimiBold16 = AppFonts.geist.copyWith(
     fontSize: 16.sp,
-    fontWeight: FontWeight.w500,
-    color: Colors.white.withValues(alpha: 0.9),
+    fontWeight: FontWeight.w600,
+    color: Colors.grey,
     height: 1.5,
   );
 }

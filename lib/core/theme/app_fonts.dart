@@ -1,5 +1,5 @@
 import 'package:google_fonts/google_fonts.dart';
 
 class AppFonts {
-  static var comfortaa = GoogleFonts.inter();
+  static var geist = GoogleFonts.geist();
 }
