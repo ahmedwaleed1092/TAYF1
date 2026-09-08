@@ -21,9 +21,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
 
-          theme: ThemeData(
-            textTheme: Typography.blackMountainView.apply(fontSizeFactor: 1.sp),
-          ),
+          theme: ThemeData(),
           routerConfig: RoutConfig.goRouter,
         );
       },

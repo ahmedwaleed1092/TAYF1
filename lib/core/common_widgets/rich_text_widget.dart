@@ -23,17 +23,14 @@ class RichTextWidget extends StatelessWidget {
         child: RichText(
           text: TextSpan(
             text: mainText,
-            style: AppStyle.headerTitle14SimiBold.copyWith(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
+            style: AppStyle.gray22Regular.copyWith(
               color: Theme.of(context).colorScheme.onSurface,
             ),
             children: [
               TextSpan(
                 text: subText,
-                style: AppStyle.headerTitle14SimiBold.copyWith(
+                style: AppStyle.yellow22ExtraBold.copyWith(
                   color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
