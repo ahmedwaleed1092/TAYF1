@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tayf/core/theme/app_style.dart';
 
 class RichTextWidget extends StatelessWidget {
@@ -23,13 +22,13 @@ class RichTextWidget extends StatelessWidget {
         child: RichText(
           text: TextSpan(
             text: mainText,
-            style: AppStyle.gray22Regular.copyWith(
+            style: AppStyle.gray10Regular.copyWith(
               color: Theme.of(context).colorScheme.onSurface,
             ),
             children: [
               TextSpan(
                 text: subText,
-                style: AppStyle.yellow22ExtraBold.copyWith(
+                style: AppStyle.gray10Regular.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),

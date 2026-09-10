@@ -31,7 +31,7 @@ class MainElevatedButton extends StatelessWidget {
       onPressed: onButtonTap as Function()?,
 
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor ?? Color(0xffAB9787),
+        backgroundColor: backgroundColor ?? Color(0xffDCFCE7),
 
         minimumSize: Size(width ?? 212.w, height ?? 43.h),
         shape: RoundedRectangleBorder(

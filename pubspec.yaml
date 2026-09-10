@@ -55,6 +55,7 @@ dependencies:
   flutter_zoom_drawer: ^3.2.0
   flutter_facebook_auth: ^7.1.8
   google_sign_in_android: ^7.2.15
+  percent_indicator: ^4.2.5
 
 dev_dependencies:
   flutter_test:

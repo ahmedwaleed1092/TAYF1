@@ -47,8 +47,7 @@ class NetworkException extends AppException {
         break;
       case DioExceptionType.connectionError:
         if (e.message?.contains('SocketException') == true) {
-          message =
-              'No internet connection. Please check your connection and try again.';
+          message = 'No internet connection. Please check your connection and try again.';
           code = 'NO_INTERNET';
         } else {
           message = 'Failed to connect to server. Please try again later.';
@@ -70,8 +69,7 @@ class NetworkException extends AppException {
         break;
       case DioExceptionType.unknown:
       default:
-        message =
-            'Network error occurred. Please check your connection and try again.';
+        message = 'Network error occurred. Please check your connection and try again.';
         code = 'UNKNOWN_NETWORK_ERROR';
         break;
     }
@@ -134,7 +132,7 @@ class ServerException extends AppException {
     } else if (statusCode == 429) {
       message = 'Too many requests. Please wait a moment and try again.';
       code = 'RATE_LIMITED';
-    } else if (statusCode! >= 400) {
+    } else if (statusCode >= 400) {
       message = responseData?['message'] ?? 'Request failed. Please try again.';
       code = 'CLIENT_ERROR';
     } else {
