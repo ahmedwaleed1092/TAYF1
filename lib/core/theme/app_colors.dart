@@ -36,4 +36,27 @@ class AppColors {
   // States
   static const Color disabled = Color(0xFF808080); // 128,128,128
   static const Color placeholder = Color(0xFF999999); // 153,153,153
+
+
+
+  // Main Colors
+  //static const Color primary = Color(0xFF1D35C2);
+//  static const Color background = Color(0xFFF8F9FA);
+  static const Color cardBackground = Color(0xFFF8FAFC);
+
+  // Text Colors
+  static const Color primaryText = Color(0xFF0D2247);
+  static const Color secondaryText = Color(0xFF6C757D);
+
+  // Status Colors
+  static const Color positiveGreen = Color(0xFF2E7D32);
+  static const Color negativeRed = Color(0xFFD32F2F);
+
+  // Borders & Dividers
+  static const Color border = Color(0xFFE2E8F0);
+  
+  // Chart Colors
+  static const Color chartLine = Color(0xFF2A2A2A);
+  static const Color chartBar = Color(0xFF2196F3);
+
 }

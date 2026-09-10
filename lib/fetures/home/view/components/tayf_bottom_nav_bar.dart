@@ -12,7 +12,7 @@ class TayfBottomNavBar extends StatelessWidget {
 
   static const List<_NavItem> _items = [
     _NavItem(icon: Icons.dashboard_rounded, label: 'Home'),
-    _NavItem(icon: Icons.solar_power_rounded, label: 'stations'),
+    _NavItem(icon: Icons.solar_power_rounded, label: 'performance'),
     _NavItem(icon: Icons.notifications_active_rounded, label: 'alerts'),
     _NavItem(icon: Icons.insights_rounded, label: 'analystics'),
     _NavItem(icon: Icons.settings_rounded, label: 'settings'),

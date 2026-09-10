@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tayf/fetures/home/view/components/body_home_screen.dart';
 import 'package:tayf/fetures/home/view/components/tayf_bottom_nav_bar.dart';
+import 'package:tayf/fetures/performance/presentation/Screens/performance_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     const BodyHomeScreen(),
-    Placeholder(),
+    PerformanceScreen(),
     Placeholder(),
     Placeholder(),
     Placeholder(),
