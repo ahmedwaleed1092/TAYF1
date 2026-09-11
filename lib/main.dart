@@ -8,7 +8,7 @@ void main() {
   runApp(const MyApp());
 }
 
-// use muiltibolcProvider for cubits on the screenUitilinit
+// use muiltibolcProviderf for cubits on the screenUitilinit
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override

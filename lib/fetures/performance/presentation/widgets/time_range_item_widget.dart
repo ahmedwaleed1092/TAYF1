@@ -29,7 +29,7 @@ class TimeRangeItemWidget extends StatelessWidget {
           style: TextStyle(
             fontSize: 15,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-            color: isSelected ? AppColors.background : AppColors.primaryText,
+            color: isSelected ? AppColors.cardBackground : AppColors.primaryText,
           ),
         ),
       ),
