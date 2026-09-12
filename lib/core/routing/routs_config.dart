@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tayf/core/routing/routs.dart';
+import 'package:tayf/fetures/cleaning/view/cleaning_recommendation_screen.dart';
+import 'package:tayf/fetures/financial/view/presentation/financial_scrreen.dart';
 import 'package:tayf/fetures/home/view/presentation/home_screen.dart';
 import 'package:tayf/fetures/on_boarding/view/presentation/on_boarding_screen.dart';
 import 'package:tayf/fetures/splash/view/presentation/splash_screen.dart';
@@ -33,6 +35,16 @@ class RoutConfig {
         path: Routs.home,
         name: Routs.home,
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: Routs.financialIncentives,
+        name: Routs.financialIncentives,
+        builder: (context, state) => const FinancialScreen(),
+      ),
+      GoRoute(
+        path: Routs.cleaningRecommendation,
+        name: Routs.cleaningRecommendation,
+        builder: (context, state) => const CleaningRecommendationScreen(),
       ),
     ],
   );

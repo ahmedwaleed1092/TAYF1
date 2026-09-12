@@ -30,6 +30,7 @@ class PerformanceRatioCard extends StatelessWidget {
         border: Border.all(color: const Color(0xFFE3E6EC), width: 1.5),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(

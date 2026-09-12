@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tayf/fetures/energy/view/presentation/energy_screen.dart';
+import 'package:tayf/fetures/financial/view/presentation/financial_scrreen.dart';
 import 'package:tayf/fetures/home/view/components/body_home_screen.dart';
 import 'package:tayf/fetures/home/view/components/tayf_bottom_nav_bar.dart';
 
@@ -14,10 +16,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     const BodyHomeScreen(),
-    Placeholder(),
-    Placeholder(),
-    Placeholder(),
-    Placeholder(),
+    //  ,
+    const Placeholder(),
+    const EnergyScreen(),
+
+    const Placeholder(),
+
+    const FinancialScreen(),
   ];
 
   @override

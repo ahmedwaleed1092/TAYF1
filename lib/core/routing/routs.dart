@@ -20,6 +20,8 @@ class Routs {
   static const String search = '/search';
   static const String categoryProducts = '/categoryProducts';
   static const String favorite = '/favorite';
+  static const String financialIncentives = '/financialIncentives';
+  static const String cleaningRecommendation = '/cleaningRecommendation';
 
   // Bottom nav routes
   static const String menu = '/menu';
