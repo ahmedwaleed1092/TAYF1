@@ -56,4 +56,61 @@ class AppColors {
   // Chart Colors
   static const Color chartLine = Color(0xFF2A2A2A);
   static const Color chartBar = Color(0xFF2196F3);
+
+  // ──────────────────────────────────────────────
+  // Soiling Analysis Screen
+  // ──────────────────────────────────────────────
+  static const Color soilingTitle = Color(0xFF16326B);
+  static const Color soilingLabel = Color(0xFF6B7280);
+  static const Color soilingLightBlueBg = Color(0xFFEAF3FB);
+  static const Color soilingCardBorder = Color(0xFFE3E6EC);
+  static const Color soilingCheckGreen = Color(0xFF1E8E3E);
+  static const Color soilingTrendLine = Color(0xFF16326B);
+  static const Color soilingGridLine = Color(0xFFE3E6EC);
+  static const Color soilingAxisLabel = Color(0xFF9CA3AF);
+  static const Color soilingNavInactive = Color(0xFF9CA3AF);
+
+  // ──────────────────────────────────────────────
+  // Alert Screen
+  // ──────────────────────────────────────────────
+  static const Color alertTitle = Color(0xFF16326B);
+  static const Color alertLabel = Color(0xFF6B7280);
+  static const Color alertFilterSelected = Color(0xFF3380CC);
+  static const Color alertFilterUnselectedText = Color(0xFF6B7280);
+  static const Color alertFilterBackground = Color(0xFFF1F5F9);
+  static const Color alertNavInactive = Color(0xFF9CA3AF);
+
+  static const Color alertHighBackground = Color(0xFFFFF5F5);
+  static const Color alertHighBorder = Color(0xFFFECACA);
+  static const Color alertHighBadgeBg = Color(0xFFDC2626);
+  static const Color alertHighBadgeText = Color(0xFFFFFFFF);
+  static const Color alertHighIcon = Color(0xFFDC2626);
+
+  static const Color alertMediumBackground = Color(0xFFFFFBEB);
+  static const Color alertMediumBorder = Color(0xFFFDE68A);
+  static const Color alertMediumBadgeBg = Color(0xFFF59E0B);
+  static const Color alertMediumBadgeText = Color(0xFFFFFFFF);
+  static const Color alertMediumIcon = Color(0xFFF59E0B);
+
+  static const Color alertInfoBackground = Color(0xFFEFF6FF);
+  static const Color alertInfoBorder = Color(0xFFBFDBFE);
+  static const Color alertInfoBadgeBg = Color(0xFF3B82F6);
+  static const Color alertInfoBadgeText = Color(0xFFFFFFFF);
+  static const Color alertInfoIcon = Color(0xFF3B82F6);
+
+  // ──────────────────────────────────────────────
+  // AI Copilot Chat Screen
+  // ──────────────────────────────────────────────
+  static const Color chatPrimary = Color(0xFF16326B);
+  static const Color chatBotText = Color(0xFF333333);
+  static const Color chatBotBubble = Color(0xFFF1F5F9);
+  static const Color chatUserBubble = Color(0xFF3380CC);
+  static const Color chatInputBg = Color(0xFFF8F9FA);
+  static const Color chatActionBorder = Color(0xFFE3E6EC);
+  static const Color chatActionIconBg = Color(0xFFEAF3FB);
+  static const Color chatActionIconColor = Color(0xFF3380CC);
+  static const Color chatBotAvatarBg = Color(0xFFEAF3FB);
+  static const Color chatBotAvatarIcon = Color(0xFF3380CC);
+  static const Color chatUserAvatarBg = Color(0xFF3380CC);
+  static const Color chatUserAvatarIcon = Color(0xFFFFFFFF);
 }

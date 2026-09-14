@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tayf/core/routing/routs_config.dart';
-import 'package:tayf/fetures/analytics/presentation/screens/Root_analsis.dart';
 import 'package:tayf/fetures/splash/view/presentation/splash_screen.dart';
 
 void main() {
@@ -21,12 +18,11 @@ class MyApp extends StatelessWidget {
       builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-   home: RootAnalsis(),
           theme: ThemeData(),
-         // routerConfig: RoutConfig.goRouter,
+          // routerConfig: RoutConfig.goRouter,
+          home: const SplashScreen(),
         );
       },
-      //child: const SplashScreen(),
     );
   }
 }

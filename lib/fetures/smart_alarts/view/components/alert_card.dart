@@ -1,169 +1,245 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tayf/core/theme/app_colors.dart';
-import 'package:tayf/core/theme/app_style.dart';
-import 'package:tayf/fetures/smart_alarts/model/smart_alert.dart';
+import 'package:tayf/core/theme/app_fonts.dart';
 
-class SeverityStyle {
-  final Color background;
-  final Color border;
-  final Color badgeBg;
-  final Color badgeText;
-  final Color iconColor;
-  final IconData icon;
-  final String label;
+class AppStyle {
+  // ──────────────────────────────────────────────
+  // Existing Styles
+  // ──────────────────────────────────────────────
+  static TextStyle headerTitle18ExtraBold = AppFonts.inter.copyWith(
+    fontSize: 22.sp,
+    fontWeight: FontWeight.w700,
+    color: const Color(0xff123B70),
+  );
 
-  const SeverityStyle({
-    required this.background,
-    required this.border,
-    required this.badgeBg,
-    required this.badgeText,
-    required this.iconColor,
-    required this.icon,
-    required this.label,
-  });
+  static TextStyle gray10Regular = AppFonts.inter.copyWith(
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w400,
+    color: const Color(0xff64748B),
+  );
 
-  static SeverityStyle of(AlertSeverity severity) {
-    switch (severity) {
-      case AlertSeverity.high:
-        return const SeverityStyle(
-          background: AppColors.alertHighBackground,
-          border: AppColors.alertHighBorder,
-          badgeBg: AppColors.alertHighBadgeBg,
-          badgeText: AppColors.alertHighBadgeText,
-          iconColor: AppColors.alertHighIcon,
-          icon: Icons.error,
-          label: 'High',
-        );
-      case AlertSeverity.medium:
-        return const SeverityStyle(
-          background: AppColors.alertMediumBackground,
-          border: AppColors.alertMediumBorder,
-          badgeBg: AppColors.alertMediumBadgeBg,
-          badgeText: AppColors.alertMediumBadgeText,
-          iconColor: AppColors.alertMediumIcon,
-          icon: Icons.error_outline,
-          label: 'Medium',
-        );
-      case AlertSeverity.info:
-        return const SeverityStyle(
-          background: AppColors.alertInfoBackground,
-          border: AppColors.alertInfoBorder,
-          badgeBg: AppColors.alertInfoBadgeBg,
-          badgeText: AppColors.alertInfoBadgeText,
-          iconColor: AppColors.alertInfoIcon,
-          icon: Icons.check_circle_outline,
-          label: 'Info',
-        );
-    }
-  }
-}
+  static TextStyle gray13Regular = AppFonts.inter.copyWith(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w500,
+    color: const Color(0xff64748B),
+  );
 
-class AlertCard extends StatelessWidget {
-  final SmartAlert alert;
+  // Onboarding-specific styles (white text for dark backgrounds)
+  static TextStyle whiteBold28 = AppFonts.inter.copyWith(
+    fontSize: 28.sp,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
 
-  const AlertCard({super.key, required this.alert});
+  static TextStyle graySimiBold16 = AppFonts.inter.copyWith(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
+    color: Colors.grey,
+    height: 1.5,
+  );
 
-  @override
-  Widget build(BuildContext context) {
-    final style = SeverityStyle.of(alert.severity);
+  // ──────────────────────────────────────────────
+  // Alert Screen – Common Colors
+  // ──────────────────────────────────────────────
+  static const Color alertTitleColor = AppColors.alertTitle;
+  static const Color alertLabelColor = AppColors.alertLabel;
+  static const Color alertFilterSelectedColor = AppColors.alertFilterSelected;
+  static const Color alertFilterUnselectedTextColor =
+      AppColors.alertFilterUnselectedText;
+  static const Color alertFilterBackgroundColor =
+      AppColors.alertFilterBackground;
+  static const Color alertBottomNavInactiveColor = AppColors.alertNavInactive;
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: style.background,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: style.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(style.icon, color: style.iconColor, size: 20),
-              const SizedBox(width: 8),
-              if (alert.severity != AlertSeverity.info)
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    color: style.badgeBg,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    style.label,
-                    style: AppStyle.alertBadgeLabel.copyWith(
-                      color: style.badgeText,
-                    ),
-                  ),
-                )
-              else
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: style.iconColor.withOpacity(0.4),
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    style.label,
-                    style: AppStyle.alertBadgeLabel.copyWith(
-                      color: style.iconColor,
-                    ),
-                  ),
-                ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Text(alert.title, style: AppStyle.alertCardTitle),
-          const SizedBox(height: 8),
-          if (alert.isNormal)
-            Text('No impact . Normal', style: AppStyle.alertNormalText)
-          else ...[
-            _InfoLine(label: 'Estimated Energy Loss', value: alert.energyLoss),
-            const SizedBox(height: 6),
-            _InfoLine(
-              label: 'Estimated Financial Loss',
-              value: alert.financialLoss,
-            ),
-            const SizedBox(height: 6),
-            _InfoLine(label: 'Probable Cause', value: alert.probableCause),
-            const SizedBox(height: 6),
-            _InfoLine(label: 'Action', value: alert.action),
-          ],
-        ],
-      ),
-    );
-  }
-}
+  // High Severity Colors
+  static const Color alertHighBackground = AppColors.alertHighBackground;
+  static const Color alertHighBorder = AppColors.alertHighBorder;
+  static const Color alertHighBadgeBg = AppColors.alertHighBadgeBg;
+  static const Color alertHighBadgeText = AppColors.alertHighBadgeText;
+  static const Color alertHighIconColor = AppColors.alertHighIcon;
 
-class _InfoLine extends StatelessWidget {
-  final String label;
-  final String value;
+  // Medium Severity Colors
+  static const Color alertMediumBackground = AppColors.alertMediumBackground;
+  static const Color alertMediumBorder = AppColors.alertMediumBorder;
+  static const Color alertMediumBadgeBg = AppColors.alertMediumBadgeBg;
+  static const Color alertMediumBadgeText = AppColors.alertMediumBadgeText;
+  static const Color alertMediumIconColor = AppColors.alertMediumIcon;
 
-  const _InfoLine({required this.label, required this.value});
+  // Info Severity Colors
+  static const Color alertInfoBackground = AppColors.alertInfoBackground;
+  static const Color alertInfoBorder = AppColors.alertInfoBorder;
+  static const Color alertInfoBadgeBg = AppColors.alertInfoBadgeBg;
+  static const Color alertInfoBadgeText = AppColors.alertInfoBadgeText;
+  static const Color alertInfoIconColor = AppColors.alertInfoIcon;
 
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        children: [
-          TextSpan(
-            text: '$label - ',
-            style: AppStyle.alertInfoLineLabel,
-          ),
-          TextSpan(
-            text: value,
-            style: AppStyle.alertInfoLineValue,
-          ),
-        ],
-      ),
-    );
-  }
+  // ──────────────────────────────────────────────
+  // Soiling Analysis Screen
+  // ──────────────────────────────────────────────
+  static TextStyle soilingAppBarTitle = AppFonts.inter.copyWith(
+    fontSize: 19.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingSectionTitle = AppFonts.inter.copyWith(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingCardTitle = AppFonts.inter.copyWith(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingBannerTitle = AppFonts.inter.copyWith(
+    fontSize: 14.5.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingBannerSubtitle = AppFonts.inter.copyWith(
+    fontSize: 12.5.sp,
+    color: AppColors.soilingLabel,
+  );
+
+  static TextStyle soilingStatLabel = AppFonts.inter.copyWith(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.soilingLabel,
+  );
+
+  static TextStyle soilingStatValue = AppFonts.inter.copyWith(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingInputLabel = AppFonts.inter.copyWith(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingImpactLabel = AppFonts.inter.copyWith(
+    fontSize: 12.5.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.soilingLabel,
+  );
+
+  static TextStyle soilingImpactValue = AppFonts.inter.copyWith(
+    fontSize: 17.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingButtonText = AppFonts.inter.copyWith(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+
+  static TextStyle soilingNavLabel = AppFonts.inter.copyWith(
+    fontSize: 10.5.sp,
+    color: AppColors.soilingNavInactive,
+  );
+
+  // ──────────────────────────────────────────────
+  // AI Copilot Chat Screen
+  // ──────────────────────────────────────────────
+  static TextStyle chatAppBarTitle = AppFonts.inter.copyWith(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.chatPrimary,
+  );
+
+  static TextStyle chatBotMessage = AppFonts.inter.copyWith(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.chatBotText,
+    height: 1.35,
+  );
+
+  static TextStyle chatUserMessage = AppFonts.inter.copyWith(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+    height: 1.35,
+  );
+
+  static TextStyle chatTimestamp = AppFonts.inter.copyWith(
+    fontSize: 12.sp,
+    color: Colors.grey,
+  );
+
+  static TextStyle chatActionLabel = AppFonts.inter.copyWith(
+    fontSize: 11.sp,
+    color: Colors.grey,
+  );
+
+  static TextStyle chatActionTitle = AppFonts.inter.copyWith(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.chatBotText,
+  );
+
+  static TextStyle chatSuggestedHeader = AppFonts.inter.copyWith(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.chatPrimary,
+  );
+
+  static TextStyle chatSuggestedChip = AppFonts.inter.copyWith(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.chatPrimary,
+  );
+
+  // ──────────────────────────────────────────────
+  // General Titles & Headers
+  // ──────────────────────────────────────────────
+  static TextStyle title = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryText,
+  );
+
+  static TextStyle sectionTitle = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primaryText,
+  );
+
+  // Body & Subtitles
+  static TextStyle body = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.normal,
+    color: AppColors.primaryText,
+  );
+
+  static TextStyle caption = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.normal,
+    color: AppColors.secondaryText,
+  );
+
+  // Metric Values
+  static TextStyle metricValue = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryText,
+  );
+
+  static TextStyle metricChange = TextStyle(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.positiveGreen,
+  );
+
+  static TextStyle precentageChange = TextStyle(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.negativeRed,
+  );
 }

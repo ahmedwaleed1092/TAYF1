@@ -5,7 +5,6 @@ import 'package:tayf/fetures/soillingAnalysis/view/components/dataset_banner.dar
 import 'package:tayf/fetures/soillingAnalysis/view/components/impact_estimation_card.dart';
 import 'package:tayf/fetures/soillingAnalysis/view/components/model_inputs_grid.dart';
 import 'package:tayf/fetures/soillingAnalysis/view/components/next_button.dart';
-import 'package:tayf/fetures/soillingAnalysis/view/components/soiling_bottom_nav_bar.dart';
 import 'package:tayf/fetures/soillingAnalysis/view/components/soiling_trend_card.dart';
 import 'package:tayf/fetures/soillingAnalysis/view/components/stats_row.dart';
 

@@ -20,6 +20,11 @@ class RoutConfig {
         builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
+        path: Routs.peformance,
+        name: Routs.peformance,
+        builder: (context, state) => const PerformanceScreen(),
+      ),
+      GoRoute(
         path: Routs.onboarding,
         name: Routs.onboarding,
         builder: (context, state) => const OnBoardingScreen(),
@@ -38,10 +43,6 @@ class RoutConfig {
         path: Routs.home,
         name: Routs.home,
         builder: (context, state) => const HomeScreen(),
-      ),GoRoute(
-        path: Routs.peformance,
-        name: Routs.peformance,
-        builder: (context, state) => const PerformanceScreen(),
       ),
       GoRoute(
         path: Routs.financialIncentives,

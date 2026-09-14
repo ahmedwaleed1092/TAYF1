@@ -54,8 +54,12 @@ class EnergyBarChartCard extends StatelessWidget {
                 ),
                 borderData: FlBorderData(show: false),
                 titlesData: FlTitlesData(
-                  topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
                   leftTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
@@ -82,7 +86,9 @@ class EnergyBarChartCard extends StatelessWidget {
                           return const SizedBox();
                         }
 
-                        final label = index == 0 ? 'Apr  ${_days[index]}' : _days[index];
+                        final label = index == 0
+                            ? 'Apr  ${_days[index]}'
+                            : _days[index];
 
                         return Padding(
                           padding: const EdgeInsets.only(top: 8),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tayf/core/common_widgets/main_elevated_button.dart';
 
 class EnergyLossCard extends StatelessWidget {
   final String value;

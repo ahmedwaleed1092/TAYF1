@@ -39,11 +39,13 @@ class AppStyle {
   // ──────────────────────────────────────────────
   // Alert Screen – Common Colors
   // ──────────────────────────────────────────────
-   static const Color alertTitleColor = AppColors.alertTitle;
+  static const Color alertTitleColor = AppColors.alertTitle;
   static const Color alertLabelColor = AppColors.alertLabel;
   static const Color alertFilterSelectedColor = AppColors.alertFilterSelected;
-  static const Color alertFilterUnselectedTextColor = AppColors.alertFilterUnselectedText;
-  static const Color alertFilterBackgroundColor = AppColors.alertFilterBackground;
+  static const Color alertFilterUnselectedTextColor =
+      AppColors.alertFilterUnselectedText;
+  static const Color alertFilterBackgroundColor =
+      AppColors.alertFilterBackground;
   static const Color alertBottomNavInactiveColor = AppColors.alertNavInactive;
 
   static const Color alertHighBackground = AppColors.alertHighBackground;
@@ -67,11 +69,6 @@ class AppStyle {
   // ──────────────────────────────────────────────
   // Alert Screen – Text Styles
   // ──────────────────────────────────────────────
-  static const Color alertHighBackground = Color(0xFFFDEEEE);
-  static const Color alertHighBorder = Color(0xFFF3C6C6);
-  static const Color alertHighBadgeBg = Color(0xFFF6D9D9);
-  static const Color alertHighBadgeText = Color(0xFFB71C1C);
-  static const Color alertHighIconColor = Color(0xFFD32F2F);
 
   // ──────────────────────────────────────────────
   // Alert Screen – Medium Severity
@@ -149,7 +146,7 @@ class AppStyle {
   // ──────────────────────────────────────────────
   // Alert Screen – Info Severity
   // ──────────────────────────────────────────────
-  s static TextStyle chatAppBarTitle = AppFonts.inter.copyWith(
+  static TextStyle chatAppBarTitle = AppFonts.inter.copyWith(
     fontSize: 20.sp,
     fontWeight: FontWeight.bold,
     color: AppColors.chatPrimary,
@@ -235,11 +232,9 @@ class AppStyle {
     fontWeight: FontWeight.w600,
     color: AppColors.positiveGreen,
   );
- static TextStyle precentageChange = TextStyle(
+  static TextStyle precentageChange = TextStyle(
     fontSize: 13.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.negativeRed,
   );
-
-
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tayf/core/theme/app_style.dart';
-import 'package:tayf/fetures/home/view/components/peformance_card.dart';
 
 class PlanetState extends StatelessWidget {
   final String? state;

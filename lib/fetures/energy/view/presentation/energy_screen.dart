@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tayf/core/common_widgets/main_elevated_button.dart';
 import 'package:tayf/core/routing/routs.dart';
-import 'package:tayf/core/theme/app_style.dart';
 import 'package:tayf/fetures/energy/view/components/energy_loss_card.dart';
 import 'package:tayf/fetures/energy/view/components/loss_card.dart';
 import 'package:tayf/fetures/energy/view/components/loss_presentage_card.dart';

@@ -27,13 +27,9 @@ class AlertsBottomNavBar extends StatelessWidget {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  item.$1,
-                  size: 22,
-                  color: AppColors.alertNavInactive,
-                ),
+                Icon(item.$1, size: 22, color: AppColors.alertNavInactive),
                 const SizedBox(height: 4),
-                Text(item.$2, style: AppStyle.alertNavLabel),
+                Text(item.$2, style: AppStyle.chatActionTitle),
               ],
             );
           }).toList(),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tayf/core/theme/app_style.dart';
 
 class PerformanceRatioCard extends StatelessWidget {

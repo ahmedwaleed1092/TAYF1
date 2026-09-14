@@ -40,7 +40,7 @@ class AlertFilterTabs extends StatelessWidget {
                 ),
                 child: Text(
                   filters[index],
-                  style: AppStyle.alertFilterTab.copyWith(
+                  style: AppStyle.chatActionTitle.copyWith(
                     color: isSelected
                         ? Colors.white
                         : AppColors.alertFilterUnselectedText,
