@@ -22,6 +22,8 @@ class Routs {
   static const String favorite = '/favorite';
   static const String financialIncentives = '/financialIncentives';
   static const String cleaningRecommendation = '/cleaningRecommendation';
+  static const String alert = '/alert';
+  static const String chat = '/chat';
 
   // Bottom nav routes
   static const String menu = '/menu';

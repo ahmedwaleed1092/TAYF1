@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class TayfBottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -11,11 +12,14 @@ class TayfBottomNavBar extends StatelessWidget {
   });
 
   static const List<_NavItem> _items = [
-    _NavItem(icon: Icons.dashboard_rounded, label: 'Home'),
-    _NavItem(icon: Icons.solar_power_rounded, label: 'stations'),
-    _NavItem(icon: Icons.energy_savings_leaf_sharp, label: 'energy'),
-    _NavItem(icon: Icons.insights_rounded, label: 'analystics'),
-    _NavItem(icon: Icons.pie_chart, label: 'financial'),
+    _NavItem(icon: HugeIcons.strokeRoundedHome11, label: 'Home'),
+    _NavItem(icon: HugeIcons.strokeRoundedChatBot, label: 'ai chat'),
+    _NavItem(icon: HugeIcons.strokeRoundedSolarEnergy, label: 'energy'),
+    _NavItem(
+      icon: HugeIcons.strokeRoundedAnalytics01,
+      label: 'Soiling Analysis',
+    ),
+    _NavItem(icon: HugeIcons.strokeRoundedChartRose, label: 'financial'),
   ];
 
   @override
@@ -89,8 +93,8 @@ class _NavBarButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              item.icon,
+            HugeIcon(
+              icon: item.icon,
               size: 24,
               color: isSelected ? activeColor : inactiveColor,
             ),
@@ -119,7 +123,7 @@ class _NavBarButton extends StatelessWidget {
 }
 
 class _NavItem {
-  final IconData icon;
+  final dynamic icon;
   final String label;
 
   const _NavItem({required this.icon, required this.label});

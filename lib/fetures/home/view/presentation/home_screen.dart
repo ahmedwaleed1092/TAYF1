@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tayf/fetures/chat_bot/view/presentation/chat_screen.dart';
 import 'package:tayf/fetures/energy/view/presentation/energy_screen.dart';
 import 'package:tayf/fetures/financial/view/presentation/financial_scrreen.dart';
 import 'package:tayf/fetures/home/view/components/body_home_screen.dart';
 import 'package:tayf/fetures/home/view/components/tayf_bottom_nav_bar.dart';
+import 'package:tayf/fetures/soillingAnalysis/view/presentation/solling_analysis_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,11 +19,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = [
     const BodyHomeScreen(),
     //  ,
-    const Placeholder(),
+    const AiCopilotScreen(),
     const EnergyScreen(),
-
-    const Placeholder(),
-
+    const SoilingAnalysisScreen(),
     const FinancialScreen(),
   ];
 

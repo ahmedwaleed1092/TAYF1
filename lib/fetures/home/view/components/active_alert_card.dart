@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tayf/core/common_widgets/main_elevated_button.dart';
+import 'package:tayf/core/routing/routs.dart';
 
 class ActiveAlertsCard extends StatelessWidget {
   final List<AlertItem> alerts;
@@ -36,6 +39,17 @@ class ActiveAlertsCard extends StatelessWidget {
                   color: Color(0xFF9B1C1C),
                   shape: BoxShape.circle,
                 ),
+              ),
+              Spacer(),
+              MainElevatedButton(
+                textOnButton: "See All",
+                backgroundColor: Color(0xFFFDEEEE),
+                textColor: Color(0xFFB71C1C),
+                onButtonTap: () {
+                  GoRouter.of(context).pushNamed(Routs.alert);
+                },
+                width: 110,
+                height: 30,
               ),
             ],
           ),

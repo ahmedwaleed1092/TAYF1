@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:tayf/core/app_assets.dart';
+import 'package:tayf/core/routing/routs.dart';
+import 'package:tayf/core/theme/app_colors.dart';
 import 'package:tayf/core/theme/app_style.dart';
 
 class headlineTitle extends StatelessWidget {
@@ -33,7 +38,7 @@ class headlineTitle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "TEYF",
+                  "TAYF",
                   style: AppStyle.headerTitle18ExtraBold.copyWith(
                     fontSize: 25.sp,
                   ),
@@ -44,6 +49,14 @@ class headlineTitle extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+          Spacer(),
+          IconButton(
+            icon: HugeIcon(icon: HugeIcons.strokeRoundedChatBot, size: 32.sp),
+            onPressed: () {
+              GoRouter.of(context).go(Routs.chat);
+            },
+            color: AppColors.alertTitle,
           ),
         ],
       ),

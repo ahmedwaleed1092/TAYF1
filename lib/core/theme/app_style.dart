@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tayf/core/theme/app_colors.dart';
 import 'package:tayf/core/theme/app_fonts.dart';
 
 class AppStyle {
@@ -36,39 +37,207 @@ class AppStyle {
   );
 
   // ──────────────────────────────────────────────
-  // Alert Screen – Common Colors
+  // Alert Screen – Color Aliases (backward-compatible)
   // ──────────────────────────────────────────────
-  static const Color alertTitleColor = Color(0xFF16326B);
-  static const Color alertLabelColor = Color(0xFF6B7280);
-  static const Color alertFilterSelectedColor = Color(0xFF16326B);
-  static const Color alertFilterUnselectedTextColor = Color(0xFF8A93A3);
-  static const Color alertFilterBackgroundColor = Color(0xFFF3F5F8);
-  static const Color alertBottomNavInactiveColor = Color(0xFF9CA3AF);
+  static const Color alertTitleColor = AppColors.alertTitle;
+  static const Color alertLabelColor = AppColors.alertLabel;
+  static const Color alertFilterSelectedColor = AppColors.alertFilterSelected;
+  static const Color alertFilterUnselectedTextColor = AppColors.alertFilterUnselectedText;
+  static const Color alertFilterBackgroundColor = AppColors.alertFilterBackground;
+  static const Color alertBottomNavInactiveColor = AppColors.alertNavInactive;
+
+  static const Color alertHighBackground = AppColors.alertHighBackground;
+  static const Color alertHighBorder = AppColors.alertHighBorder;
+  static const Color alertHighBadgeBg = AppColors.alertHighBadgeBg;
+  static const Color alertHighBadgeText = AppColors.alertHighBadgeText;
+  static const Color alertHighIconColor = AppColors.alertHighIcon;
+
+  static const Color alertMediumBackground = AppColors.alertMediumBackground;
+  static const Color alertMediumBorder = AppColors.alertMediumBorder;
+  static const Color alertMediumBadgeBg = AppColors.alertMediumBadgeBg;
+  static const Color alertMediumBadgeText = AppColors.alertMediumBadgeText;
+  static const Color alertMediumIconColor = AppColors.alertMediumIcon;
+
+  static const Color alertInfoBackground = AppColors.alertInfoBackground;
+  static const Color alertInfoBorder = AppColors.alertInfoBorder;
+  static const Color alertInfoBadgeBg = AppColors.alertInfoBadgeBg;
+  static const Color alertInfoBadgeText = AppColors.alertInfoBadgeText;
+  static const Color alertInfoIconColor = AppColors.alertInfoIcon;
 
   // ──────────────────────────────────────────────
-  // Alert Screen – High Severity
+  // Alert Screen – Text Styles
   // ──────────────────────────────────────────────
-  static const Color alertHighBackground = Color(0xFFFDEEEE);
-  static const Color alertHighBorder = Color(0xFFF3C6C6);
-  static const Color alertHighBadgeBg = Color(0xFFF6D9D9);
-  static const Color alertHighBadgeText = Color(0xFFB71C1C);
-  static const Color alertHighIconColor = Color(0xFFD32F2F);
+  static TextStyle alertAppBarTitle = AppFonts.inter.copyWith(
+    fontSize: 19.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.alertTitle,
+  );
+
+  static TextStyle alertCardTitle = AppFonts.inter.copyWith(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.alertTitle,
+  );
+
+  static TextStyle alertBadgeLabel = AppFonts.inter.copyWith(
+    fontSize: 11.sp,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle alertFilterTab = AppFonts.inter.copyWith(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle alertInfoLineLabel = AppFonts.inter.copyWith(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.alertLabel,
+  );
+
+  static TextStyle alertInfoLineValue = AppFonts.inter.copyWith(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.alertTitle,
+  );
+
+  static TextStyle alertNormalText = AppFonts.inter.copyWith(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.alertLabel,
+  );
+
+  static TextStyle alertEmptyText = AppFonts.inter.copyWith(
+    fontSize: 14.sp,
+    color: AppColors.alertLabel,
+  );
+
+  static TextStyle alertNavLabel = AppFonts.inter.copyWith(
+    fontSize: 10.5.sp,
+    color: AppColors.alertNavInactive,
+  );
 
   // ──────────────────────────────────────────────
-  // Alert Screen – Medium Severity
+  // Soiling Analysis Screen
   // ──────────────────────────────────────────────
-  static const Color alertMediumBackground = Color(0xFFFDF6E3);
-  static const Color alertMediumBorder = Color(0xFFEFE0B0);
-  static const Color alertMediumBadgeBg = Color(0xFFF7E7B0);
-  static const Color alertMediumBadgeText = Color(0xFF9A6B00);
-  static const Color alertMediumIconColor = Color(0xFFE0A200);
+  static TextStyle soilingAppBarTitle = AppFonts.inter.copyWith(
+    fontSize: 19.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingSectionTitle = AppFonts.inter.copyWith(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingCardTitle = AppFonts.inter.copyWith(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingBannerTitle = AppFonts.inter.copyWith(
+    fontSize: 14.5.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingBannerSubtitle = AppFonts.inter.copyWith(
+    fontSize: 12.5.sp,
+    color: AppColors.soilingLabel,
+  );
+
+  static TextStyle soilingStatLabel = AppFonts.inter.copyWith(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.soilingLabel,
+  );
+
+  static TextStyle soilingStatValue = AppFonts.inter.copyWith(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingInputLabel = AppFonts.inter.copyWith(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingImpactLabel = AppFonts.inter.copyWith(
+    fontSize: 12.5.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.soilingLabel,
+  );
+
+  static TextStyle soilingImpactValue = AppFonts.inter.copyWith(
+    fontSize: 17.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.soilingTitle,
+  );
+
+  static TextStyle soilingButtonText = AppFonts.inter.copyWith(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+
+  static TextStyle soilingNavLabel = AppFonts.inter.copyWith(
+    fontSize: 10.5.sp,
+    color: AppColors.soilingNavInactive,
+  );
 
   // ──────────────────────────────────────────────
-  // Alert Screen – Info Severity
+  // AI Copilot Chat Screen
   // ──────────────────────────────────────────────
-  static const Color alertInfoBackground = Color(0xFFE8F7EC);
-  static const Color alertInfoBorder = Color(0xFFBFE8CC);
-  static const Color alertInfoBadgeBg = Color(0xFFBFE8CC);
-  static const Color alertInfoBadgeText = Color(0xFF1E8E3E);
-  static const Color alertInfoIconColor = Color(0xFF1E8E3E);
+  static TextStyle chatAppBarTitle = AppFonts.inter.copyWith(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.chatPrimary,
+  );
+
+  static TextStyle chatBotMessage = AppFonts.inter.copyWith(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.chatBotText,
+    height: 1.35,
+  );
+
+  static TextStyle chatUserMessage = AppFonts.inter.copyWith(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+    height: 1.35,
+  );
+
+  static TextStyle chatTimestamp = AppFonts.inter.copyWith(
+    fontSize: 12.sp,
+    color: Colors.grey,
+  );
+
+  static TextStyle chatActionLabel = AppFonts.inter.copyWith(
+    fontSize: 11.sp,
+    color: Colors.grey,
+  );
+
+  static TextStyle chatActionTitle = AppFonts.inter.copyWith(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.chatBotText,
+  );
+
+  static TextStyle chatSuggestedHeader = AppFonts.inter.copyWith(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.chatPrimary,
+  );
+
+  static TextStyle chatSuggestedChip = AppFonts.inter.copyWith(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.chatPrimary,
+  );
 }
