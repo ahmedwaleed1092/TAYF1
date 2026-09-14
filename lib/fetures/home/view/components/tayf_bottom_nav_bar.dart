@@ -13,7 +13,7 @@ class TayfBottomNavBar extends StatelessWidget {
 
   static const List<_NavItem> _items = [
     _NavItem(icon: HugeIcons.strokeRoundedHome11, label: 'Home'),
-    _NavItem(icon: HugeIcons.strokeRoundedChatBot, label: 'ai chat'),
+    _NavItem(icon: HugeIcons.strokeRoundedSolarPanel02, label: 'Performance'),
     _NavItem(icon: HugeIcons.strokeRoundedSolarEnergy, label: 'energy'),
     _NavItem(
       icon: HugeIcons.strokeRoundedAnalytics01,

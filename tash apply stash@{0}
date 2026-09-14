@@ -1,0 +1,196 @@
+[1mdiff --git a/android/gradle.properties b/android/gradle.properties[m
+[1mindex e96108c..271e89f 100644[m
+[1m--- a/android/gradle.properties[m
+[1m+++ b/android/gradle.properties[m
+[36m@@ -4,3 +4,5 @@[m [mandroid.useAndroidX=true[m
+ android.newDsl=false[m
+ # This builtInKotlin flag was added by the Flutter template[m
+ android.builtInKotlin=false[m
+[32m+[m[32mkotlin.incremental=false[m
+[32m+[m[32mkotlin.compiler.execution.strategy=in-process[m
+\ No newline at end of file[m
+[1mdiff --git a/lib/core/common_widgets/rich_text_widget.dart b/lib/core/common_widgets/rich_text_widget.dart[m
+[1mindex 79f638e..e69de29 100644[m
+[1m--- a/lib/core/common_widgets/rich_text_widget.dart[m
+[1m+++ b/lib/core/common_widgets/rich_text_widget.dart[m
+[36m@@ -1,42 +0,0 @@[m
+[31m-import 'package:flutter/material.dart';[m
+[31m-import 'package:flutter_screenutil/flutter_screenutil.dart';[m
+[31m-import 'package:tayf/core/theme/app_style.dart';[m
+[31m-[m
+[31m-class RichTextWidget extends StatelessWidget {[m
+[31m-  final String mainText;[m
+[31m-  final String subText;[m
+[31m-  final Function? onTap;[m
+[31m-[m
+[31m-  const RichTextWidget({[m
+[31m-    super.key,[m
+[31m-    required this.mainText,[m
+[31m-    required this.subText,[m
+[31m-    required this.onTap,[m
+[31m-  });[m
+[31m-[m
+[31m-  @override[m
+[31m-  Widget build(BuildContext context) {[m
+[31m-    return Center([m
+[31m-      child: InkWell([m
+[31m-        onTap: onTap as Function()?,[m
+[31m-[m
+[31m-        child: RichText([m
+[31m-          text: TextSpan([m
+[31m-            text: mainText,[m
+[31m-            style: AppStyle.gray22Regular.copyWith([m
+[31m-              color: Theme.of(context).colorScheme.onSurface,[m
+[31m-            ),[m
+[31m-            children: [[m
+[31m-              TextSpan([m
+[31m-                text: subText,[m
+[31m-                style: AppStyle.yellow22ExtraBold.copyWith([m
+[31m-                  color: Theme.of(context).colorScheme.primary,[m
+[31m-                ),[m
+[31m-              ),[m
+[31m-            ],[m
+[31m-          ),[m
+[31m-        ),[m
+[31m-      ),[m
+[31m-    );[m
+[31m-  }[m
+[31m-}[m
+[1mdiff --git a/lib/core/routing/routs.dart b/lib/core/routing/routs.dart[m
+[1mindex 4ae5820..827e73e 100644[m
+[1m--- a/lib/core/routing/routs.dart[m
+[1m+++ b/lib/core/routing/routs.dart[m
+[36m@@ -5,7 +5,7 @@[m [mclass Routs {[m
+   static const String login = '/login';[m
+   static const String signUp = '/signUp';[m
+   static const String verfy = '/verfy';[m
+[31m-[m
+[32m+[m[32mstatic const String performance = '/performance';[m
+   static const String category = '/category';[m
+   static const String rewards = '/rewards';[m
+   static const String profile = '/profile';[m
+[1mdiff --git a/lib/core/routing/routs_config.dart b/lib/core/routing/routs_config.dart[m
+[1mindex c4ef88b..a3edd61 100644[m
+[1m--- a/lib/core/routing/routs_config.dart[m
+[1m+++ b/lib/core/routing/routs_config.dart[m
+[36m@@ -3,6 +3,7 @@[m [mimport 'package:go_router/go_router.dart';[m
+ import 'package:tayf/core/routing/routs.dart';[m
+ import 'package:tayf/fetures/home/view/presentation/home_screen.dart';[m
+ import 'package:tayf/fetures/on_boarding/view/presentation/on_boarding_screen.dart';[m
+[32m+[m[32mimport 'package:tayf/fetures/performance/presentation/Screens/performance_screen.dart';[m
+ import 'package:tayf/fetures/splash/view/presentation/splash_screen.dart';[m
+ [m
+ class RoutConfig {[m
+[36m@@ -34,6 +35,11 @@[m [mclass RoutConfig {[m
+         name: Routs.home,[m
+         builder: (context, state) => const HomeScreen(),[m
+       ),[m
+[32m+[m[32m      GoRoute([m
+[32m+[m[32m        path: Routs.performance,[m
+[32m+[m[32m        name: Routs.performance,[m
+[32m+[m[32m        builder: (context, state) => const PerformanceScreen(),[m
+[32m+[m[32m      ),[m
+     ],[m
+   );[m
+ }[m
+[1mdiff --git a/lib/core/theme/app_colors.dart b/lib/core/theme/app_colors.dart[m
+[1mindex bb00245..aeac64c 100644[m
+[1m--- a/lib/core/theme/app_colors.dart[m
+[1m+++ b/lib/core/theme/app_colors.dart[m
+[36m@@ -1,10 +1,19 @@[m
+ import 'package:flutter/material.dart';[m
+ [m
+[31m-class AppColors {[m
+[31m-  static const Color background = Color(0xFF0B0F19);[m
+[31m-  static const Color primary = Color(0xFFF59E0B);[m
+[31m-  static const Color secondary = Color(0xFFEF4444);[m
+[31m-  static const Color green = Color(0xFF14B8A6);[m
+[31m-  static const Color gray = Color(0xFF9CA3AF);[m
+[31m-  static const Color lightGray = Color(0xFFD1D5DB);[m
+[31m-}[m
+[32m+[m[32mabstract class AppColors {[m
+[32m+[m[32m  // Private constructor to prevent instantiation[m
+[32m+[m[32m  AppColors._();[m
+[32m+[m
+[32m+[m[32m  // Core Brand Colors[m
+[32m+[m[32m  static const Color primaryBlue = Color(0xFF2196F3);[m
+[32m+[m[32m  static const Color primaryText = Color(0xFF123B70);[m
+[32m+[m[32m  static const Color secondaryText = Color(0xFF64748B);[m
+[32m+[m[32mstatic const Color border = Color(0xFFE2E8F0);[m
+[32m+[m[32m  // Backgrounds[m
+[32m+[m[32m  static const Color background = Colors.white;[m
+[32m+[m[32m  static const Color cardBackground = Color(0xFFF8FAFC);[m
+[32m+[m
+[32m+[m[32m  // Status Colors[m
+[32m+[m[32m  static const Color positiveGreen = Color(0xFF16A34A);[m
+[32m+[m[32m  static const Color negativeRed = Color(0xFFDC2626);[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/lib/core/theme/app_style.dart b/lib/core/theme/app_style.dart[m
+[1mindex 7f68252..133352a 100644[m
+[1m--- a/lib/core/theme/app_style.dart[m
+[1m+++ b/lib/core/theme/app_style.dart[m
+[36m@@ -1,38 +1,35 @@[m
+ import 'package:flutter/material.dart';[m
+[31m-import 'package:flutter_screenutil/flutter_screenutil.dart';[m
+[31m-import 'package:tayf/core/theme/app_fonts.dart';[m
+ [m
+[31m-class AppStyle {[m
+[31m-  // Existing styles[m
+[31m-  static TextStyle yellow22ExtraBold = AppFonts.geist.copyWith([m
+[31m-    fontSize: 22.sp,[m
+[31m-    fontWeight: FontWeight.w800,[m
+[31m-    color: const Color(0xffF59E0B),[m
+[31m-  );[m
+[32m+[m[32mimport 'app_colors.dart';[m
+ [m
+[31m-  static TextStyle gray22Regular = AppFonts.geist.copyWith([m
+[31m-    fontSize: 22.sp,[m
+[31m-    fontWeight: FontWeight.w500,[m
+[31m-    color: const Color(0xffF59E0B),[m
+[31m-  );[m
+[32m+[m[32mabstract class AppTextStyles {[m
+[32m+[m[32m  AppTextStyles._();[m
+ [m
+[31m-  static TextStyle headerTitle18Bold = AppFonts.geist.copyWith([m
+[31m-    fontSize: 18.sp,[m
+[31m-    fontWeight: FontWeight.w700,[m
+[31m-    color: const Color(0xffF9FAFB),[m
+[32m+[m[32m  static const TextStyle title = TextStyle([m
+[32m+[m[32m    fontSize: 25,[m
+[32m+[m[32m    fontWeight: FontWeight.w600,[m
+[32m+[m[32m    color: AppColors.primaryText,[m
+   );[m
+ [m
+[31m-  // Onboarding-specific styles (white text for dark backgrounds)[m
+[31m-  static TextStyle whiteBold28 = AppFonts.geist.copyWith([m
+[31m-    fontSize: 28.sp,[m
+[31m-    fontWeight: FontWeight.bold,[m
+[31m-    color: Colors.white,[m
+[32m+[m[32m  static const TextStyle sectionTitle = TextStyle([m
+[32m+[m[32m    fontSize: 17,[m
+[32m+[m[32m    fontWeight: FontWeight.w600,[m
+[32m+[m[32m    color: AppColors.primaryText,[m
+   );[m
+ [m
+[31m-  static TextStyle graySimiBold16 = AppFonts.geist.copyWith([m
+[31m-    fontSize: 16.sp,[m
+[32m+[m[32m  static const TextStyle metricValue = TextStyle([m
+[32m+[m[32m    fontSize: 20,[m
+     fontWeight: FontWeight.w600,[m
+[31m-    color: Colors.grey,[m
+[31m-    height: 1.5,[m
+[32m+[m[32m    color: AppColors.primaryText,[m
+[32m+[m[32m  );[m
+[32m+[m
+[32m+[m[32m  static const TextStyle caption = TextStyle([m
+[32m+[m[32m    fontSize: 16,[m
+[32m+[m[32m    color: AppColors.secondaryText,[m
+[32m+[m[32m  );[m
+[32m+[m[32m  static const TextStyle percentage = TextStyle([m
+[32m+[m[32m    fontSize: 14,[m
+[32m+[m[32m    fontWeight: FontWeight.w500,[m
+[32m+[m[32m    color: AppColors.negativeRed,[m
+   );[m
+ }[m
+[1mdiff --git a/lib/feture

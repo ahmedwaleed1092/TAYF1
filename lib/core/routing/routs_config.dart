@@ -7,6 +7,7 @@ import 'package:tayf/fetures/financial/view/presentation/financial_scrreen.dart'
 import 'package:tayf/fetures/home/view/presentation/home_screen.dart';
 import 'package:tayf/fetures/on_boarding/view/presentation/on_boarding_screen.dart';
 import 'package:tayf/fetures/smart_alarts/view/presentation/alarts_screen.dart';
+import 'package:tayf/fetures/performance/presentation/Screens/performance_screen.dart';
 import 'package:tayf/fetures/splash/view/presentation/splash_screen.dart';
 
 class RoutConfig {
@@ -37,6 +38,10 @@ class RoutConfig {
         path: Routs.home,
         name: Routs.home,
         builder: (context, state) => const HomeScreen(),
+      ),GoRoute(
+        path: Routs.peformance,
+        name: Routs.peformance,
+        builder: (context, state) => const PerformanceScreen(),
       ),
       GoRoute(
         path: Routs.financialIncentives,

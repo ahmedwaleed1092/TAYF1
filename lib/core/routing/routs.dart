@@ -5,6 +5,7 @@ class Routs {
   static const String login = '/login';
   static const String signUp = '/signUp';
   static const String verfy = '/verfy';
+  static const String peformance = '/peformance';
 
   static const String category = '/category';
   static const String rewards = '/rewards';

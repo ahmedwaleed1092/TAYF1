@@ -37,9 +37,9 @@ class AppStyle {
   );
 
   // ──────────────────────────────────────────────
-  // Alert Screen – Color Aliases (backward-compatible)
+  // Alert Screen – Common Colors
   // ──────────────────────────────────────────────
-  static const Color alertTitleColor = AppColors.alertTitle;
+   static const Color alertTitleColor = AppColors.alertTitle;
   static const Color alertLabelColor = AppColors.alertLabel;
   static const Color alertFilterSelectedColor = AppColors.alertFilterSelected;
   static const Color alertFilterUnselectedTextColor = AppColors.alertFilterUnselectedText;
@@ -67,58 +67,14 @@ class AppStyle {
   // ──────────────────────────────────────────────
   // Alert Screen – Text Styles
   // ──────────────────────────────────────────────
-  static TextStyle alertAppBarTitle = AppFonts.inter.copyWith(
-    fontSize: 19.sp,
-    fontWeight: FontWeight.bold,
-    color: AppColors.alertTitle,
-  );
-
-  static TextStyle alertCardTitle = AppFonts.inter.copyWith(
-    fontSize: 16.sp,
-    fontWeight: FontWeight.bold,
-    color: AppColors.alertTitle,
-  );
-
-  static TextStyle alertBadgeLabel = AppFonts.inter.copyWith(
-    fontSize: 11.sp,
-    fontWeight: FontWeight.bold,
-  );
-
-  static TextStyle alertFilterTab = AppFonts.inter.copyWith(
-    fontSize: 13.sp,
-    fontWeight: FontWeight.w600,
-  );
-
-  static TextStyle alertInfoLineLabel = AppFonts.inter.copyWith(
-    fontSize: 13.sp,
-    fontWeight: FontWeight.w500,
-    color: AppColors.alertLabel,
-  );
-
-  static TextStyle alertInfoLineValue = AppFonts.inter.copyWith(
-    fontSize: 13.sp,
-    fontWeight: FontWeight.w500,
-    color: AppColors.alertTitle,
-  );
-
-  static TextStyle alertNormalText = AppFonts.inter.copyWith(
-    fontSize: 13.sp,
-    fontWeight: FontWeight.w500,
-    color: AppColors.alertLabel,
-  );
-
-  static TextStyle alertEmptyText = AppFonts.inter.copyWith(
-    fontSize: 14.sp,
-    color: AppColors.alertLabel,
-  );
-
-  static TextStyle alertNavLabel = AppFonts.inter.copyWith(
-    fontSize: 10.5.sp,
-    color: AppColors.alertNavInactive,
-  );
+  static const Color alertHighBackground = Color(0xFFFDEEEE);
+  static const Color alertHighBorder = Color(0xFFF3C6C6);
+  static const Color alertHighBadgeBg = Color(0xFFF6D9D9);
+  static const Color alertHighBadgeText = Color(0xFFB71C1C);
+  static const Color alertHighIconColor = Color(0xFFD32F2F);
 
   // ──────────────────────────────────────────────
-  // Soiling Analysis Screen
+  // Alert Screen – Medium Severity
   // ──────────────────────────────────────────────
   static TextStyle soilingAppBarTitle = AppFonts.inter.copyWith(
     fontSize: 19.sp,
@@ -191,9 +147,9 @@ class AppStyle {
   );
 
   // ──────────────────────────────────────────────
-  // AI Copilot Chat Screen
+  // Alert Screen – Info Severity
   // ──────────────────────────────────────────────
-  static TextStyle chatAppBarTitle = AppFonts.inter.copyWith(
+  s static TextStyle chatAppBarTitle = AppFonts.inter.copyWith(
     fontSize: 20.sp,
     fontWeight: FontWeight.bold,
     color: AppColors.chatPrimary,
@@ -240,4 +196,50 @@ class AppStyle {
     fontWeight: FontWeight.w500,
     color: AppColors.chatPrimary,
   );
+
+  // Titles & Headers
+  static TextStyle title = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryText,
+  );
+
+  static TextStyle sectionTitle = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primaryText,
+  );
+
+  // Body & Subtitles
+  static TextStyle body = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.normal,
+    color: AppColors.primaryText,
+  );
+
+  static TextStyle caption = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.normal,
+    color: AppColors.secondaryText,
+  );
+
+  // Metric Values
+  static TextStyle metricValue = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryText,
+  );
+
+  static TextStyle metricChange = TextStyle(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.positiveGreen,
+  );
+ static TextStyle precentageChange = TextStyle(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.negativeRed,
+  );
+
+
 }
