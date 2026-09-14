@@ -15,77 +15,43 @@ class SmartAlert {
   const SmartAlert({
     required this.severity,
     required this.title,
-    required this.energyLoss,
-    required this.financialLoss,
-    required this.probableCause,
-    required this.action,
+    this.energyLoss = '',
+    this.financialLoss = '',
+    this.probableCause = '',
+    this.action = '',
     this.isNormal = false,
   });
 }
 
-class SmartAlertsScreen extends StatefulWidget {
-  const SmartAlertsScreen({super.key});
+class PlantAlertsScreen extends StatefulWidget {
+  final List<SmartAlert> alerts;
+  final int initialFilterIndex;
+  final ValueChanged<SmartAlert>? onAlertTap;
+
+  const PlantAlertsScreen({
+    super.key,
+    required this.alerts,
+    this.initialFilterIndex = 0,
+    this.onAlertTap,
+  });
 
   @override
-  State<SmartAlertsScreen> createState() => _SmartAlertsScreenState();
+  State<PlantAlertsScreen> createState() => _PlantAlertsScreenState();
 }
 
-class _SmartAlertsScreenState extends State<SmartAlertsScreen> {
-  int _selectedFilter = 0;
+class _PlantAlertsScreenState extends State<PlantAlertsScreen> {
+  late int _selectedFilter = widget.initialFilterIndex;
   final List<String> _filters = const ['All', 'Critical', 'High', 'Medium'];
 
-  static const Color titleColor = AppStyle.primaryColor;
 
-  final List<SmartAlert> _alerts = const [
-    SmartAlert(
-      severity: AlertSeverity.high,
-      title: 'INV-04 underperforming by 18%',
-      energyLoss: '450 kWh',
-      financialLoss: '5,850 EGP',
-      probableCause: 'Inverter Issue',
-      action: 'Inspect inverter',
-    ),
-    SmartAlert(
-      severity: AlertSeverity.medium,
-      title: 'Soiling level high',
-      energyLoss: '320 kWh',
-      financialLoss: '4,160 EGP',
-      probableCause: 'Soiling',
-      action: 'Schedule cleaning',
-    ),
-    SmartAlert(
-      severity: AlertSeverity.high,
-      title: 'String voltage low',
-      energyLoss: '210 kWh',
-      financialLoss: '2,730 EGP',
-      probableCause: 'Electrical',
-      action: 'Check connections',
-    ),
-    SmartAlert(
-      severity: AlertSeverity.high,
-      title: 'High temperature alert',
-      energyLoss: '120 kWh',
-      financialLoss: '1,560 EGP',
-      probableCause: 'Temperature Issue',
-      action: 'Check temperature',
-    ),
-    SmartAlert(
-      severity: AlertSeverity.medium,
-      title: 'Communication failure',
-      energyLoss: '180 kWh',
-      financialLoss: '2,340 EGP',
-      probableCause: 'Communication Issue',
-      action: 'Check communication',
-    ),
-    SmartAlert(
-      severity: AlertSeverity.info,
-      title: 'Low irradiance',
-      energyLoss: '90 kWh',
-      financialLoss: '1,170 EGP',
-      probableCause: 'Irradiance Issue',
-      action: 'Check irradiance',
-    ),
-  ];
+
+  List<SmartAlert> get _filteredAlerts {
+    final label = _filters[_selectedFilter];
+    if (label == 'All') return widget.alerts;
+    return widget.alerts.where((a) {
+      return a.severity.name.toLowerCase() == label.toLowerCase();
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,10 +60,14 @@ class _SmartAlertsScreenState extends State<SmartAlertsScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.6,
-        leading: const BackButton(color: titleColor),
+        leading: const BackButton(color: AppStyle.alertTitleColor),
         title: const Text(
-          'Smart Alerts',
-          style: appBarTitleStyle,
+          'Plant Alerts',
+          style: TextStyle(
+            color: AppStyle.alertTitleColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 19,
+          ),
         ),
       ),
       body: SafeArea(
@@ -112,21 +82,32 @@ class _SmartAlertsScreenState extends State<SmartAlertsScreen> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-                itemCount: _alerts.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 14),
-                    child: _AlertCard(alert: _alerts[index]),
-                  );
-                },
-              ),
+              child: _filteredAlerts.isEmpty
+                  ? const Center(
+                      child: Text(
+                        'No alerts in this category',
+                        style: TextStyle(color: AppStyle.alertLabelColor),
+                      ),
+                    )
+                  : ListView.builder(
+                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+                      itemCount: _filteredAlerts.length,
+                      itemBuilder: (context, index) {
+                        final alert = _filteredAlerts[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 14),
+                          child: GestureDetector(
+                            onTap: () => widget.onAlertTap?.call(alert),
+                            child: _AlertCard(alert: alert),
+                          ),
+                        );
+                      },
+                    ),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: const _SmartAlertsBottomNavBar(),
+      bottomNavigationBar: const _PlantAlertsBottomNavBar(),
     );
   }
 }
@@ -142,15 +123,14 @@ class _FilterTabs extends StatelessWidget {
     required this.onSelected,
   });
 
-  static const Color selectedColor = AppStyle.primaryColor;
-  static const Color unselectedText = AppStyle.filterTabUnselectedText;
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: AppStyle.filterTabBackground,
+        color: AppStyle.alertFilterBackgroundColor,
         borderRadius: BorderRadius.circular(30),
       ),
       child: Row(
@@ -164,13 +144,15 @@ class _FilterTabs extends StatelessWidget {
                 height: 40,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: isSelected ? selectedColor : Colors.transparent,
+                  color: isSelected ? AppStyle.alertFilterSelectedColor : Colors.transparent,
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Text(
                   filters[index],
-                  style: filterTabStyle.copyWith(
-                    color: isSelected ? Colors.white : filterTabUnselectedText,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: isSelected ? Colors.white : AppStyle.alertFilterUnselectedTextColor,
                   ),
                 ),
               ),
@@ -242,8 +224,7 @@ class _AlertCard extends StatelessWidget {
 
   const _AlertCard({required this.alert});
 
-  static const Color titleColor = AppStyle.primaryColor;
-  static const Color labelColor = AppStyle.labelColor;
+
 
   @override
   Widget build(BuildContext context) {
@@ -276,7 +257,11 @@ class _AlertCard extends StatelessWidget {
                   ),
                   child: Text(
                     style.label,
-                    style: alertLabelStyle.copyWith(color: style.badgeText),
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: style.badgeText,
+                    ),
                   ),
                 )
               else
@@ -286,13 +271,16 @@ class _AlertCard extends StatelessWidget {
                     vertical: 3,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.transparent,
                     border: Border.all(color: style.iconColor.withOpacity(0.4)),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
                     style.label,
-                    style: alertLabelStyle.copyWith(color: style.iconColor),
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: style.iconColor,
+                    ),
                   ),
                 ),
             ],
@@ -300,7 +288,11 @@ class _AlertCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             alert.title,
-            style: alertTitleStyle,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: AppStyle.alertTitleColor,
+            ),
           ),
           const SizedBox(height: 8),
           if (alert.isNormal)
@@ -309,7 +301,7 @@ class _AlertCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
-                color: labelColor,
+                color: AppStyle.alertLabelColor,
               ),
             )
           else ...[
@@ -340,15 +332,15 @@ class _InfoLine extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        style: AppStyle.infoLineLabelStyle,
+        style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
         children: [
           TextSpan(
             text: '$label - ',
-            style: AppStyle.infoLineLabelStyle,
+            style: const TextStyle(color: AppStyle.alertLabelColor),
           ),
           TextSpan(
             text: value,
-            style: AppStyle.infoLineValueStyle,
+            style: const TextStyle(color: AppStyle.alertTitleColor),
           ),
         ],
       ),
@@ -356,11 +348,10 @@ class _InfoLine extends StatelessWidget {
   }
 }
 
-class _SmartAlertsBottomNavBar extends StatelessWidget {
-  const _SmartAlertsBottomNavBar();
+class _PlantAlertsBottomNavBar extends StatelessWidget {
+  const _PlantAlertsBottomNavBar();
 
-  static const Color activeColor = AppStyle.primaryColor;
-  static const Color inactiveColor = AppStyle.bottomNavInactiveColor;
+
 
   @override
   Widget build(BuildContext context) {
@@ -384,11 +375,11 @@ class _SmartAlertsBottomNavBar extends StatelessWidget {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(item.$1, size: 22, color: inactiveColor),
+                Icon(item.$1, size: 22, color: AppStyle.alertBottomNavInactiveColor),
                 const SizedBox(height: 4),
                 Text(
                   item.$2,
-                  style: bottomNavTextStyle.copyWith(color: inactiveColor),
+                  style: const TextStyle(fontSize: 10.5, color: AppStyle.alertBottomNavInactiveColor),
                 ),
               ],
             );
