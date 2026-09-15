@@ -5,10 +5,13 @@ class ChatInputBar extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onSend;
 
+  final Function(String)? onSuggestionTap;
+
   const ChatInputBar({
     super.key,
     required this.controller,
     required this.onSend,
+    this.onSuggestionTap,
   });
 
   @override

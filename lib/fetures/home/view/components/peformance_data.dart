@@ -11,7 +11,7 @@ class PeformanceData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 360.w,
-      height: 85.h,
+      height: 100.h,
       decoration: BoxDecoration(
         color: Color(0xffFFF7ED),
         borderRadius: BorderRadius.all(Radius.circular(16.r)),

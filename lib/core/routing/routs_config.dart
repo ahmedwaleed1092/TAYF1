@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tayf/core/routing/routs.dart';
+import 'package:tayf/fetures/chat_bot/cubit/copilot_cubit.dart';
+import 'package:tayf/fetures/analytics/view/presentation/anomaly_detection_screen.dart';
+import 'package:tayf/fetures/analytics/view/presentation/expected_vs_actual_screen.dart';
+import 'package:tayf/fetures/analytics/view/presentation/root_analysis_screen.dart';
 import 'package:tayf/fetures/chat_bot/view/presentation/chat_screen.dart';
 import 'package:tayf/fetures/cleaning/view/cleaning_recommendation_screen.dart';
 import 'package:tayf/fetures/financial/view/presentation/financial_scrreen.dart';
@@ -62,7 +67,25 @@ class RoutConfig {
       GoRoute(
         path: Routs.chat,
         name: Routs.chat,
-        builder: (context, state) => const AiCopilotScreen(),
+        builder: (context, state) => BlocProvider(
+          create: (_) => CopilotCubit(),
+          child: const AiCopilotScreen(),
+        ),
+      ),
+      GoRoute(
+        path: Routs.expectedVsActualScreen,
+        name: Routs.expectedVsActualScreen,
+        builder: (context, state) => const ExpectedVsActualScreen(),
+      ),
+      GoRoute(
+        path: Routs.rootAnalysisScreen,
+        name: Routs.rootAnalysisScreen,
+        builder: (context, state) => const RootAnalsis(),
+      ),
+      GoRoute(
+        path: Routs.anomalyDetectionScreen,
+        name: Routs.anomalyDetectionScreen,
+        builder: (context, state) => const AnomalyDetectionScreen(),
       ),
     ],
   );

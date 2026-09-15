@@ -44,15 +44,12 @@ class BodyHomeScreen extends StatelessWidget {
 
                   itemCount: 6,
                   itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: PerformanceRatioCard(
-                        title: "Current Power",
-                        value: "69 KWH",
-                        width: 120.w,
-                        height: 80.h,
-                        peformanceNote: "22% lose",
-                      ),
+                    return PerformanceRatioCard(
+                      title: "Current ",
+                      value: "69 KWH",
+                      width: 120.w,
+                      height: 80.h,
+                      peformanceNote: "22% lose",
                     );
                   },
                 ),

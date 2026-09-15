@@ -1,95 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:tayf/core/theme/app_colors.dart';
 import 'package:tayf/core/theme/app_style.dart';
+import 'package:tayf/fetures/smart_alarts/cubit/alerts_cubit.dart';
 import 'package:tayf/fetures/smart_alarts/model/smart_alert.dart';
-import 'package:tayf/fetures/smart_alarts/view/components/alert_filter_tabs.dart';
 
 class PlantAlertsScreen extends StatefulWidget {
-  final List<SmartAlert> alerts;
-  final int initialFilterIndex;
-  final ValueChanged<SmartAlert>? onAlertTap;
-
-  const PlantAlertsScreen({
-    super.key,
-    this.alerts = _defaultAlerts,
-    this.initialFilterIndex = 0,
-    this.onAlertTap,
-  });
-
-  static const List<SmartAlert> _defaultAlerts = [
-    SmartAlert(
-      severity: AlertSeverity.high,
-      title: 'Inverter Overheating Detected',
-      energyLoss: '320 KWh',
-      financialLoss: '4,160 EGP',
-      probableCause: 'Cooling fan failure or blocked ventilation',
-      action: 'Inspect inverter cooling system immediately',
-    ),
-    SmartAlert(
-      severity: AlertSeverity.high,
-      title: 'Severe Soiling on Zone B3',
-      energyLoss: '580 KWh',
-      financialLoss: '7,540 EGP',
-      probableCause: 'Dust accumulation after sandstorm event',
-      action: 'Schedule emergency cleaning for Zone B3',
-    ),
-    SmartAlert(
-      severity: AlertSeverity.medium,
-      title: 'String Voltage Mismatch',
-      energyLoss: '145 KWh',
-      financialLoss: '1,885 EGP',
-      probableCause: 'Partial shading or module degradation',
-      action: 'Perform IV curve trace on affected strings',
-    ),
-    SmartAlert(
-      severity: AlertSeverity.medium,
-      title: 'Tracker Misalignment Warning',
-      energyLoss: '210 KWh',
-      financialLoss: '2,730 EGP',
-      probableCause: 'Mechanical drift in tracker motor',
-      action: 'Recalibrate tracker position sensors',
-    ),
-    SmartAlert(
-      severity: AlertSeverity.info,
-      title: 'Scheduled Maintenance Completed',
-      isNormal: true,
-    ),
-    SmartAlert(
-      severity: AlertSeverity.info,
-      title: 'Weather Forecast: Clear Skies Next 5 Days',
-      isNormal: true,
-    ),
-    SmartAlert(
-      severity: AlertSeverity.high,
-      title: 'Communication Loss – Meter #12',
-      energyLoss: 'Unknown',
-      financialLoss: 'Unknown',
-      probableCause: 'Network cable damage or gateway failure',
-      action: 'Check network connections at combiner box #12',
-    ),
-    SmartAlert(
-      severity: AlertSeverity.medium,
-      title: 'Below-Expected Generation Today',
-      energyLoss: '95 KWh',
-      financialLoss: '1,235 EGP',
-      probableCause: 'Cloud cover exceeding forecast',
-      action: 'Monitor through end of day, review tomorrow',
-    ),
-  ];
+  const PlantAlertsScreen({super.key});
 
   @override
   State<PlantAlertsScreen> createState() => _PlantAlertsScreenState();
 }
 
 class _PlantAlertsScreenState extends State<PlantAlertsScreen> {
-  late int _selectedFilter = widget.initialFilterIndex;
+  int _selectedFilterIndex = 0;
+
   final List<String> _filters = const ['All', 'Critical', 'High', 'Medium'];
 
-  List<SmartAlert> get _filteredAlerts {
-    final label = _filters[_selectedFilter];
-    if (label == 'All') return widget.alerts;
-    return widget.alerts.where((a) {
-      return a.severity.name.toLowerCase() == label.toLowerCase();
+  List<AlertModel> _filterAlerts(List<AlertModel> alerts) {
+    final selectedFilter = _filters[_selectedFilterIndex];
+
+    if (selectedFilter == 'All') {
+      return alerts;
+    }
+
+    return alerts.where((alert) {
+      return alert.severity.trim().toLowerCase() ==
+          selectedFilter.toLowerCase();
     }).toList();
   }
 
@@ -97,52 +36,198 @@ class _PlantAlertsScreenState extends State<PlantAlertsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.6,
         leading: const BackButton(color: AppColors.alertTitle),
-        title: Text('Plant Alerts'),
+        title: Text('Plant Alerts', style: AppStyle.chatAppBarTitle),
       ),
+
       body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
-              child: AlertFilterTabs(
-                filters: _filters,
-                selectedIndex: _selectedFilter,
-                onSelected: (i) => setState(() => _selectedFilter = i),
-              ),
-            ),
-            Expanded(
-              child: _filteredAlerts.isEmpty
-                  ? Center(
-                      child: Text(
-                        'No alerts in this category',
-                        style: AppStyle.chatAppBarTitle,
+        child: BlocBuilder<AlertsCubit, AlertsState>(
+          builder: (context, state) {
+            // =========================
+            // Loading
+            // =========================
+            if (state is AlertsLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            // =========================
+            // Error
+            // =========================
+            if (state is AlertsError) {
+              return Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.error_outline, size: 50.sp, color: Colors.red),
+                      SizedBox(height: 12.h),
+                      Text(
+                        'Failed to load alerts',
+                        style: AppStyle.sectionTitle,
+                        textAlign: TextAlign.center,
                       ),
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-                      itemCount: _filteredAlerts.length,
-                      itemBuilder: (context, index) {
-                        final alert = _filteredAlerts[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 14),
-                          child: GestureDetector(
-                            onTap: () => widget.onAlertTap?.call(alert),
-                            child: AlertCard(alert: alert),
-                          ),
-                        );
+                      SizedBox(height: 8.h),
+                      Text(
+                        state.error,
+                        style: AppStyle.chatBotMessage,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 20.h),
+                      ElevatedButton(
+                        onPressed: () {
+                          context.read<AlertsCubit>().getAlerts();
+                        },
+                        child: const Text('Try Again'),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            // =========================
+            // Initial
+            // =========================
+            if (state is AlertsInitial) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            // =========================
+            // Success
+            // =========================
+            if (state is AlertsSuccess) {
+              final alerts = _filterAlerts(state.alerts);
+
+              return Column(
+                children: [
+                  // =========================
+                  // Filters
+                  // =========================
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 4.h),
+                    child: _AlertFilterTabs(
+                      filters: _filters,
+                      selectedIndex: _selectedFilterIndex,
+                      onSelected: (index) {
+                        setState(() {
+                          _selectedFilterIndex = index;
+                        });
                       },
                     ),
-            ),
-          ],
+                  ),
+
+                  // =========================
+                  // Alerts List
+                  // =========================
+                  Expanded(
+                    child: alerts.isEmpty
+                        ? Center(
+                            child: Text(
+                              'No alerts in this category',
+                              style: AppStyle.chatAppBarTitle,
+                            ),
+                          )
+                        : RefreshIndicator(
+                            onRefresh: () {
+                              return context.read<AlertsCubit>().getAlerts();
+                            },
+                            child: ListView.builder(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              padding: EdgeInsets.fromLTRB(
+                                16.w,
+                                12.h,
+                                16.w,
+                                16.h,
+                              ),
+                              itemCount: alerts.length,
+                              itemBuilder: (context, index) {
+                                final alert = alerts[index];
+
+                                return Padding(
+                                  padding: EdgeInsets.only(bottom: 14.h),
+                                  child: AlertCard(alert: alert),
+                                );
+                              },
+                            ),
+                          ),
+                  ),
+                ],
+              );
+            }
+
+            return const SizedBox.shrink();
+          },
         ),
       ),
     );
   }
 }
+
+// ============================================================
+// Filter Tabs
+// ============================================================
+
+class _AlertFilterTabs extends StatelessWidget {
+  final List<String> filters;
+  final int selectedIndex;
+  final ValueChanged<int> onSelected;
+
+  const _AlertFilterTabs({
+    required this.filters,
+    required this.selectedIndex,
+    required this.onSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 42.h,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: filters.length,
+        separatorBuilder: (_, __) => SizedBox(width: 8.w),
+        itemBuilder: (context, index) {
+          final isSelected = index == selectedIndex;
+
+          return GestureDetector(
+            onTap: () => onSelected(index),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: isSelected ? AppColors.alertTitle : Colors.white,
+                borderRadius: BorderRadius.circular(22.r),
+                border: Border.all(
+                  color: isSelected
+                      ? AppColors.alertTitle
+                      : Colors.grey.shade300,
+                ),
+              ),
+              child: Text(
+                filters[index],
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w600,
+                  color: isSelected ? Colors.white : Colors.grey.shade700,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+// ============================================================
+// Severity Style
+// ============================================================
 
 class SeverityStyle {
   final Color background;
@@ -163,9 +248,20 @@ class SeverityStyle {
     required this.label,
   });
 
-  static SeverityStyle of(AlertSeverity severity) {
-    switch (severity) {
-      case AlertSeverity.high:
+  static SeverityStyle of(String severity) {
+    switch (severity.trim().toLowerCase()) {
+      case 'critical':
+        return const SeverityStyle(
+          background: AppColors.alertHighBackground,
+          border: AppColors.alertHighBorder,
+          badgeBg: AppColors.alertHighBadgeBg,
+          badgeText: AppColors.alertHighBadgeText,
+          iconColor: AppColors.alertHighIcon,
+          icon: Icons.error,
+          label: 'Critical',
+        );
+
+      case 'high':
         return const SeverityStyle(
           background: AppColors.alertHighBackground,
           border: AppColors.alertHighBorder,
@@ -175,7 +271,8 @@ class SeverityStyle {
           icon: Icons.error,
           label: 'High',
         );
-      case AlertSeverity.medium:
+
+      case 'medium':
         return const SeverityStyle(
           background: AppColors.alertMediumBackground,
           border: AppColors.alertMediumBorder,
@@ -185,22 +282,27 @@ class SeverityStyle {
           icon: Icons.error_outline,
           label: 'Medium',
         );
-      case AlertSeverity.info:
+
+      default:
         return const SeverityStyle(
           background: AppColors.alertInfoBackground,
           border: AppColors.alertInfoBorder,
           badgeBg: AppColors.alertInfoBadgeBg,
           badgeText: AppColors.alertInfoBadgeText,
           iconColor: AppColors.alertInfoIcon,
-          icon: Icons.check_circle_outline,
+          icon: Icons.info_outline,
           label: 'Info',
         );
     }
   }
 }
 
+// ============================================================
+// Alert Card
+// ============================================================
+
 class AlertCard extends StatelessWidget {
-  final SmartAlert alert;
+  final AlertModel alert;
 
   const AlertCard({super.key, required this.alert});
 
@@ -210,77 +312,103 @@ class AlertCard extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: style.background,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: style.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // ====================================================
+          // Header
+          // ====================================================
+
           Row(
             children: [
-              Icon(style.icon, color: style.iconColor, size: 20),
-              const SizedBox(width: 8),
-              if (alert.severity != AlertSeverity.info)
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 3,
+              Icon(style.icon, color: style.iconColor, size: 20.sp),
+
+              SizedBox(width: 8.w),
+
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.h),
+                decoration: BoxDecoration(
+                  color: style.badgeBg,
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                child: Text(
+                  style.label,
+                  style: AppStyle.chatActionTitle.copyWith(
+                    color: style.badgeText,
                   ),
-                  decoration: BoxDecoration(
-                    color: style.badgeBg,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
+                ),
+              ),
+
+              const Spacer(),
+
+              if (alert.asset.isNotEmpty && alert.asset != '-')
+                Flexible(
                   child: Text(
-                    style.label,
-                    style: AppStyle.chatActionTitle.copyWith(
-                      color: style.badgeText,
-                    ),
-                  ),
-                )
-              else
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: style.iconColor.withOpacity(0.4)),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    style.label,
-                    style: AppStyle.soilingStatLabel.copyWith(
-                      color: style.iconColor,
-                    ),
+                    alert.asset,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.end,
+                    style: AppStyle.chatActionTitle,
                   ),
                 ),
             ],
           ),
-          const SizedBox(height: 10),
-          Text(alert.title, style: AppStyle.sectionTitle),
-          const SizedBox(height: 8),
-          if (alert.isNormal)
-            Text('No impact . Normal', style: AppStyle.chatBotMessage)
-          else ...[
-            _InfoLine(label: 'Estimated Energy Loss', value: alert.energyLoss),
-            const SizedBox(height: 6),
-            _InfoLine(
-              label: 'Estimated Financial Loss',
-              value: alert.financialLoss,
-            ),
-            const SizedBox(height: 6),
-            _InfoLine(label: 'Probable Cause', value: alert.probableCause),
-            const SizedBox(height: 6),
-            _InfoLine(label: 'Action', value: alert.action),
-          ],
+
+          SizedBox(height: 10.h),
+
+          // ====================================================
+          // Problem
+          // ====================================================
+          Text(alert.problem, style: AppStyle.sectionTitle),
+
+          SizedBox(height: 8.h),
+
+          // ====================================================
+          // Energy Loss
+          // ====================================================
+          _InfoLine(
+            label: 'Estimated Energy Loss',
+            value: '${alert.energyLossKwh.toStringAsFixed(1)} KWh',
+          ),
+
+          SizedBox(height: 6.h),
+
+          // ====================================================
+          // Financial Loss
+          // ====================================================
+          _InfoLine(
+            label: 'Estimated Financial Loss',
+            value: '${alert.financialLossEgp.toStringAsFixed(1)} EGP',
+          ),
+
+          SizedBox(height: 6.h),
+
+          // ====================================================
+          // Root Cause
+          // ====================================================
+          _InfoLine(label: 'Probable Cause', value: alert.rootCause),
+
+          SizedBox(height: 6.h),
+
+          // ====================================================
+          // Recommended Action
+          // ====================================================
+          _InfoLine(label: 'Action', value: alert.recommendedAction),
         ],
       ),
     );
   }
 }
+
+// ============================================================
+// Info Line
+// ============================================================
 
 class _InfoLine extends StatelessWidget {
   final String label;

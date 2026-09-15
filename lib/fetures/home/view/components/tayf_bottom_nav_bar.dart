@@ -107,7 +107,7 @@ class _NavBarButton extends StatelessWidget {
                       child: Text(
                         item.label,
                         style: const TextStyle(
-                          fontSize: 13,
+                          fontSize: 10,
                           fontWeight: FontWeight.w600,
                           color: activeColor,
                         ),

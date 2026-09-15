@@ -25,10 +25,26 @@ class Routs {
   static const String cleaningRecommendation = '/cleaningRecommendation';
   static const String alert = '/alert';
   static const String chat = '/chat';
+  static const String expectedVsActualScreen = '/expectedVsActualScreen';
+  static const String rootAnalysisScreen = '/rootAnalysisScreen';
+  static const String anomalyDetectionScreen = '/anomalyDetectionScreen';
 
   // Bottom nav routes
   static const String menu = '/menu';
   static const String favorites = '/favorites';
   static const String orders = '/orders';
   static const String support = '/support';
+}
+
+class ApiConstant {
+  static const String baseUrl = "https://tayf.azurewebsites.net/api/";
+
+  //extenal api keys
+
+  static const String getWeatherData =
+      "http://api.weatherapi.com/v1/current.json?key=93fde835487341a09c8152046252604&q=cityName&aqi=no";
+  static const String aihatBaseUrl = "http://13.53.182.194:8000/api";
+
+  static const String getAlerts =
+      "https://tayfbackend-production.up.railway.app/api/v1/Alerts";
 }

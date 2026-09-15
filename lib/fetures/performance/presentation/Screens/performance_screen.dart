@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gap/flutter_gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tayf/core/routing/routs.dart';
 import 'package:tayf/core/theme/app_colors.dart';
 import 'package:tayf/core/theme/app_style.dart';
+import 'package:tayf/fetures/analytics/view/presentation/expected_vs_actual_screen.dart';
 import 'package:tayf/fetures/performance/presentation/widgets/EnergyBarChartCard.dart';
 import 'package:tayf/fetures/performance/presentation/widgets/metric_card.dart';
 import 'package:tayf/fetures/performance/presentation/widgets/power_chart_widget.dart';
@@ -29,10 +32,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
           icon: const Icon(Icons.arrow_back, color: AppColors.primaryText),
           onPressed: () {},
         ),
-        title: Text(
-          'Performance Monitoring',
-          style: AppStyle.title,
-        ),
+        title: Text('Performance Monitoring', style: AppStyle.title),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -41,19 +41,22 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Time Range Filters
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: ['Day', 'Week', 'Month', 'Year'].map((range) {
-                return TimeRangeItemWidget(
-                  label: range,
-                  isSelected: selectedRange == range,
-                  onTap: () {
-                    setState(() {
-                      selectedRange = range;
-                    });
-                  },
-                );
-              }).toList(),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: ['Day', 'Week', 'Month', 'Year'].map((range) {
+                  return TimeRangeItemWidget(
+                    label: range,
+                    isSelected: selectedRange == range,
+                    onTap: () {
+                      setState(() {
+                        selectedRange = range;
+                      });
+                    },
+                  );
+                }).toList(),
+              ),
             ),
 
             const Gap(20),
@@ -61,10 +64,13 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
             const Gap(12),
 
             // Power Metric Card
-            const PowerMetricsCard(
+            PowerMetricsCard(
               currentPowerValue: '69',
               expectedPowerValue: '82',
               percentage: 15.8,
+              onViewDetails: () {
+                context.pushNamed(Routs.expectedVsActualScreen);
+              },
             ),
 
             const Gap(15),
@@ -73,10 +79,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Power (KW)',
-                  style: AppStyle.sectionTitle,
-                ),
+                Text('Power (KW)', style: AppStyle.sectionTitle),
                 Row(
                   children: [
                     Row(
@@ -90,10 +93,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                           ),
                         ),
                         const Gap(6),
-                        Text(
-                          'Actual',
-                          style: AppStyle.caption,
-                        ),
+                        Text('Actual', style: AppStyle.caption),
                       ],
                     ),
                     const Gap(18),
@@ -109,10 +109,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                           ),
                         ),
                         Gap(6),
-                        Text(
-                          'Expected',
-                          style: AppStyle.caption,
-                        ),
+                        Text('Expected', style: AppStyle.caption),
                       ],
                     ),
                   ],
