@@ -21,13 +21,16 @@ class AlertModel {
 
   factory AlertModel.fromJson(Map<String, dynamic> json) {
     return AlertModel(
-      severity: json['severity'] as String? ?? 'Unknown',
-      asset: json['asset'] as String? ?? '-',
-      problem: json['problem'] as String? ?? '-',
-      rootCause: json['rootCause'] as String? ?? '-',
-      energyLossKwh: (json['energyLossKwh'] as num?)?.toDouble() ?? 0,
-      financialLossEgp: (json['financialLossEgp'] as num?)?.toDouble() ?? 0,
-      recommendedAction: json['recommendedAction'] as String? ?? '-',
+      // String fields
+      severity: json['severity']?.toString() ?? 'Unknown',
+      asset: json['asset']?.toString() ?? '-',
+      problem: json['problem']?.toString() ?? '-',
+      rootCause: json['rootCause']?.toString() ?? '-',
+      recommendedAction: json['recommendedAction']?.toString() ?? '-',
+
+      // Numeric fields
+      energyLossKwh: _toDouble(json['energyLossKwh']),
+      financialLossEgp: _toDouble(json['financialLossEgp']),
     );
   }
 
@@ -41,5 +44,23 @@ class AlertModel {
       'financialLossEgp': financialLossEgp,
       'recommendedAction': recommendedAction,
     };
+  }
+
+  static double _toDouble(dynamic value) {
+    if (value == null) {
+      return 0.0;
+    }
+
+    // Handles int and double
+    if (value is num) {
+      return value.toDouble();
+    }
+
+    // Handles numeric String
+    if (value is String) {
+      return double.tryParse(value) ?? 0.0;
+    }
+
+    return 0.0;
   }
 }
