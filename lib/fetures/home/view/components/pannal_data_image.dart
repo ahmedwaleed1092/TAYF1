@@ -33,7 +33,7 @@ class BannalData extends StatelessWidget {
                 color: Colors.amber,
                 borderRadius: BorderRadius.all(Radius.circular(16.r)),
                 image: DecorationImage(
-                  image: AssetImage("assets/images/pannal.png"),
+                  image: AssetImage("assets/images/planet1.jpg"),
                   fit: BoxFit.cover,
                 ),
               ),

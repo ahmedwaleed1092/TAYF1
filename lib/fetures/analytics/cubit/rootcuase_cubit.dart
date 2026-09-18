@@ -16,9 +16,7 @@ class RootcuaseCubit extends Cubit<RootcuaseState> {
     emit(RootcuaseLoading());
 
     try {
-      final analysis = await RootCauseService.getRootCauseAnalysis(
-        rowIndex: rowIndex,
-      );
+      final analysis = await RootCauseService.getRootCauseAnalysis();
 
       emit(RootcuaseLoaded(analysis: analysis));
     } catch (e) {
