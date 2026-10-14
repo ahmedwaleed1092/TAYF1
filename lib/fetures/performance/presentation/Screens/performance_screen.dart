@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tayf/core/routing/routs.dart';
 import 'package:tayf/core/theme/app_colors.dart';
 import 'package:tayf/core/theme/app_style.dart';
-import 'package:tayf/fetures/analytics/view/presentation/expected_vs_actual_screen.dart';
+import 'package:tayf/fetures/performance/presentation/cubit/sensor_cubit.dart';
+import 'package:tayf/fetures/performance/presentation/cubit/sensor_state.dart';
 import 'package:tayf/fetures/performance/presentation/widgets/EnergyBarChartCard.dart';
 import 'package:tayf/fetures/performance/presentation/widgets/metric_card.dart';
 import 'package:tayf/fetures/performance/presentation/widgets/power_chart_widget.dart';
@@ -34,124 +36,139 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
         ),
         title: Text('Performance Monitoring', style: AppStyle.title),
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Time Range Filters
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: ['Day', 'Week', 'Month', 'Year'].map((range) {
-                  return TimeRangeItemWidget(
-                    label: range,
-                    isSelected: selectedRange == range,
-                    onTap: () {
-                      setState(() {
-                        selectedRange = range;
-                      });
-                    },
-                  );
-                }).toList(),
-              ),
+      body: BlocBuilder<SensorCubit, SensorState>(
+        builder: (context, state) {
+          final r = state.latest;
+
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
             ),
-
-            const Gap(20),
-            Text('Power & Energy', style: AppStyle.sectionTitle),
-            const Gap(12),
-
-            // Power Metric Card
-            PowerMetricsCard(
-              currentPowerValue: '69',
-              expectedPowerValue: '82',
-              percentage: 15.8,
-              onViewDetails: () {
-                context.pushNamed(Routs.expectedVsActualScreen);
-              },
-            ),
-
-            const Gap(15),
-
-            // Power Header + Legends
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Power (KW)', style: AppStyle.sectionTitle),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: ['Day', 'Week', 'Month', 'Year'].map((range) {
+                      return TimeRangeItemWidget(
+                        label: range,
+                        isSelected: selectedRange == range,
+                        onTap: () {
+                          setState(() {
+                            selectedRange = range;
+                          });
+                        },
+                      );
+                    }).toList(),
+                  ),
+                ),
+
+                const Gap(20),
+                Text('Power & Energy', style: AppStyle.sectionTitle),
+                const Gap(12),
+
+                PowerMetricsCard(
+                  currentPowerValue: r == null
+                      ? '--'
+                      : (r.expectedPowerNorm * 100).toStringAsFixed(1),
+                  expectedPowerValue: r == null
+                      ? '--'
+                      : (r.expectedPowerNorm * 100).toStringAsFixed(1),
+                  percentage: 15.8,
+                  onViewDetails: () {
+                    context.pushNamed(Routs.expectedVsActualScreen);
+                  },
+                ),
+
+                const Gap(15),
+
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Text('Power (KW)', style: AppStyle.sectionTitle),
                     Row(
                       children: [
-                        Container(
-                          width: 8,
-                          height: 8,
-                          decoration: const BoxDecoration(
-                            color: AppColors.primaryText,
-                            shape: BoxShape.circle,
-                          ),
+                        Row(
+                          children: [
+                            Container(
+                              width: 8,
+                              height: 8,
+                              decoration: BoxDecoration(
+                                color: state.status == SensorStatus.live
+                                    ? Colors.green
+                                    : AppColors.primaryText,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            const Gap(6),
+                            Text('Actual', style: AppStyle.caption),
+                          ],
                         ),
-                        const Gap(6),
-                        Text('Actual', style: AppStyle.caption),
-                      ],
-                    ),
-                    const Gap(18),
-                    Row(
-                      children: [
-                        const Text(
-                          '--',
-                          style: TextStyle(
-                            color: AppColors.secondaryText,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            letterSpacing: -1,
-                          ),
+                        const Gap(18),
+                        Row(
+                          children: [
+                            const Text(
+                              '--',
+                              style: TextStyle(
+                                color: AppColors.secondaryText,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                letterSpacing: -1,
+                              ),
+                            ),
+                            const Gap(6),
+                            Text('Expected', style: AppStyle.caption),
+                          ],
                         ),
-                        Gap(6),
-                        Text('Expected', style: AppStyle.caption),
                       ],
                     ),
                   ],
                 ),
+
+                const Gap(12),
+                const PowerLineChart(),
+                const Gap(12),
+
+                Row(
+                  children: [
+                    MetricCard(
+                      title: 'Irradiance',
+                      value: r == null
+                          ? '--'
+                          : '${r.poaIrradiance.toStringAsFixed(0)} w/m',
+                      changePercentage: '+2.3%',
+                      isPositive: true,
+                    ),
+                    const Gap(8),
+                    MetricCard(
+                      title: 'Temperature',
+                      value: r == null
+                          ? '--'
+                          : '${r.moduleTemp.toStringAsFixed(0)} C',
+                      changePercentage: '-1.2%',
+                      isPositive: false,
+                    ),
+                    const Gap(8),
+                    const MetricCard(
+                      title: 'Inverter Eff',
+                      value: '97%',
+                      changePercentage: '+0.5%',
+                      isPositive: true,
+                    ),
+                  ],
+                ),
+
+                const Gap(12),
+                const EnergyBarChartCard(),
+                const Gap(16),
               ],
             ),
-
-            const Gap(12),
-            const PowerLineChart(),
-            const Gap(12),
-
-            // Metrics Row
-            Row(
-              children: const [
-                MetricCard(
-                  title: 'Irradiance',
-                  value: '812 w/m',
-                  changePercentage: '+2.3%',
-                  isPositive: true,
-                ),
-                Gap(8),
-                MetricCard(
-                  title: 'Temperature',
-                  value: '37 C',
-                  changePercentage: '-1.2%',
-                  isPositive: false,
-                ),
-                Gap(8),
-                MetricCard(
-                  title: 'Inverter Eff',
-                  value: '97%',
-                  changePercentage: '+0.5%',
-                  isPositive: true,
-                ),
-              ],
-            ),
-
-            const Gap(12),
-            const EnergyBarChartCard(),
-            const Gap(16),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:tayf/core/api/api_helper.dart';
 
 class CopilotService {
-  static String baseUrl = "https://solar-production-dab6.up.railway.app/api";
+  static String baseUrl = "https://solar-production-d8bd.up.railway.app/api";
   static Future<Response> sendMessage(String message) async {
     final response = await DioHelper.postRequest(
       endPoints: "$baseUrl/chat",
