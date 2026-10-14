@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tayf/core/theme/app_colors.dart';
 import 'package:tayf/core/theme/app_style.dart';
+import 'package:tayf/fetures/soillingAnalysis/cubit/soilling_cubit.dart';
+import 'package:tayf/fetures/soillingAnalysis/cubit/soilling_state.dart';
 import 'package:tayf/fetures/soillingAnalysis/view/components/dataset_banner.dart';
 import 'package:tayf/fetures/soillingAnalysis/view/components/impact_estimation_card.dart';
 import 'package:tayf/fetures/soillingAnalysis/view/components/model_inputs_grid.dart';
@@ -11,11 +14,10 @@ import 'package:tayf/fetures/soillingAnalysis/view/components/stats_row.dart';
 class SoilingAnalysisScreen extends StatelessWidget {
   final String datasetName;
   final String modelName;
-  final String estimatedSoiling;
-  final String performanceImpact;
+  final String performanceImpact; // لسه ثابتة (مفيش مصدر ليها في SoilingStatus)
   final List<String> modelInputs;
-  final String energyLoss;
-  final String financialLoss;
+  final String energyLoss; // لسه ثابتة
+  final String financialLoss; // لسه ثابتة
   final List<double> trendValues; // 0.0 - 1.0 (percent as fraction)
   final List<String> trendLabels;
   final VoidCallback? onNext;
@@ -24,7 +26,6 @@ class SoilingAnalysisScreen extends StatelessWidget {
     super.key,
     this.datasetName = 'Andasol-3 Dataset',
     this.modelName = 'Soiling Model',
-    this.estimatedSoiling = '4%',
     this.performanceImpact = '8.2%',
     this.modelInputs = const [
       'POA / GHI Irradiance',
@@ -79,44 +80,102 @@ class SoilingAnalysisScreen extends StatelessWidget {
         title: Text('Soiling Analysis', style: AppStyle.soilingAppBarTitle),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DatasetBanner(
-                      datasetName: datasetName,
-                      modelName: modelName,
-                    ),
-                    const SizedBox(height: 16),
-                    StatsRow(
-                      estimatedSoiling: estimatedSoiling,
-                      performanceImpact: performanceImpact,
-                    ),
-                    const SizedBox(height: 22),
-                    Text('Model Inputs', style: AppStyle.soilingSectionTitle),
-                    const SizedBox(height: 14),
-                    ModelInputsGrid(inputs: modelInputs),
-                    const SizedBox(height: 22),
-                    ImpactEstimationCard(
-                      energyLoss: energyLoss,
-                      financialLoss: financialLoss,
-                    ),
-                    const SizedBox(height: 22),
-                    SoilingTrendCard(values: trendValues, xLabels: trendLabels),
-                    const SizedBox(height: 16),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: NextButton(onTap: () {}),
-                    ),
-                  ],
+        child: BlocBuilder<SoilingCubit, SoilingState>(
+          builder: (context, state) {
+            // =========================== Loading ===========================
+            if (state is SoilingInitial || state is SoilingLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            // ============================ Error ============================
+            if (state is SoilingError) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.error_outline,
+                        size: 50,
+                        color: Colors.redAccent,
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        state.error,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.redAccent),
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () =>
+                            context.read<SoilingCubit>().getSoilingStatus(),
+                        child: const Text('Retry'),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
-          ],
+              );
+            }
+
+            // ============================ Loaded ===========================
+            final status = (state as SoilingLoaded).status;
+            final estimatedSoiling =
+                '${status.currentSoilingLossPct.toStringAsFixed(1)}%';
+
+            return Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        DatasetBanner(
+                          datasetName: datasetName,
+                          modelName: modelName,
+                        ),
+                        const SizedBox(height: 16),
+                        StatsRow(
+                          estimatedSoiling: estimatedSoiling,
+                          performanceImpact: performanceImpact,
+                        ),
+                        if (status.recommendation.isNotEmpty) ...[
+                          const SizedBox(height: 12),
+                          Text(
+                            status.recommendation,
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        ],
+                        const SizedBox(height: 22),
+                        Text(
+                          'Model Inputs',
+                          style: AppStyle.soilingSectionTitle,
+                        ),
+                        const SizedBox(height: 14),
+                        ModelInputsGrid(inputs: modelInputs),
+                        const SizedBox(height: 22),
+                        ImpactEstimationCard(
+                          energyLoss: energyLoss,
+                          financialLoss: financialLoss,
+                        ),
+                        const SizedBox(height: 22),
+                        SoilingTrendCard(
+                          values: trendValues,
+                          xLabels: trendLabels,
+                        ),
+                        const SizedBox(height: 16),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: NextButton(onTap: onNext ?? () {}),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

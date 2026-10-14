@@ -1,9 +1,7 @@
 // lib/fetures/financial_loss/cubit/financial_loss_cubit.dart
 
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:tayf/core/api/api_helper.dart';
-import 'package:tayf/core/routing/routs.dart';
 import 'package:tayf/fetures/financial/cubit/financial_state.dart';
 import 'package:tayf/fetures/financial/models/financial_loss_model.dart';
 
@@ -18,7 +16,7 @@ class FinancialLossCubit extends Cubit<FinancialLossState> {
 
     try {
       final response = await DioHelper.getData(
-        endPoints: "https://tayfbackend-production.up.railway.app/api/v1/analysis/financial-loss?plantId=1&tariffType=%24",
+        endPoints: "https://tayfbackend-production-e4fd.up.railway.app/api/v1/analysis/financial-loss?plantId=1&tariffType=4",
         // query: {'plantId': plantId, 'tariffType': tariffType},
       );
 

@@ -20,6 +20,7 @@ class SensorCubit extends Cubit<SensorState> {
 
     _sub = _service.readings().listen(
       (reading) {
+        if (isClosed) return;
         final updated = [...state.history, reading];
         if (updated.length > _maxHistory) {
           updated.removeRange(0, updated.length - _maxHistory);
@@ -33,8 +34,9 @@ class SensorCubit extends Cubit<SensorState> {
         );
       },
       onError: (e) {
+        if (isClosed) return;
         emit(state.copyWith(status: SensorStatus.error, error: e.toString()));
-        _retryTimer = Timer(const Duration(seconds: 3), start); // إعادة اتصال
+        _retryTimer = Timer(const Duration(seconds: 3), start);
       },
       cancelOnError: true,
     );

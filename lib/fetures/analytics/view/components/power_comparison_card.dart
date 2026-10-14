@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:tayf/core/theme/app_colors.dart';
 import 'package:tayf/core/theme/app_style.dart';
+import 'package:tayf/fetures/performance/presentation/cubit/sensor_cubit.dart';
+import 'package:tayf/fetures/performance/presentation/cubit/sensor_state.dart';
 import 'package:tayf/fetures/performance/presentation/widgets/power_chart_widget.dart';
 
 class PowerComparisonCard extends StatelessWidget {
-  final List<String>? timeLabels;
-
-  const PowerComparisonCard({
-    super.key,
-    this.timeLabels,
-  });
+  const PowerComparisonCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,6 @@ class PowerComparisonCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. Section Title
             Text(
               'Power Comparison',
               style: AppStyle.sectionTitle.copyWith(
@@ -35,8 +33,6 @@ class PowerComparisonCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-
-            // 2. Legend Right-Aligned (Right above the chart grid)
             Align(
               alignment: Alignment.centerRight,
               child: Row(
@@ -72,11 +68,22 @@ class PowerComparisonCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
-
-            // 3. Line Chart
-            timeLabels != null
-                ? PowerLineChart(timeLabels: timeLabels!)
-                : const PowerLineChart(),
+            BlocBuilder<SensorCubit, SensorState>(
+              buildWhen: (p, c) => p.latest?.seq != c.latest?.seq,
+              builder: (context, state) {
+                final h = state.history;
+                if (h.isEmpty) {
+                  return const SizedBox(
+                    height: 200,
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+                final fmt = DateFormat('HH:mm');
+                final values = h.map((e) => e.expectedPowerNorm * 100).toList();
+                final labels = h.map((e) => fmt.format(e.timestamp)).toList();
+                return PowerLineChart(values: values, timeLabels: labels);
+              },
+            ),
           ],
         ),
       ),

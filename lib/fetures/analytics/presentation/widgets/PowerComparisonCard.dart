@@ -6,10 +6,7 @@ import 'package:tayf/fetures/performance/presentation/widgets/power_chart_widget
 class PowerComparisonCard extends StatelessWidget {
   final List<String>? timeLabels;
 
-  const PowerComparisonCard({
-    super.key,
-    this.timeLabels,
-  });
+  const PowerComparisonCard({super.key, this.timeLabels});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +24,7 @@ class PowerComparisonCard extends StatelessWidget {
           children: [
             // 1. Section Title
             Text(
-              'Power Comparison',
+              'Power Comparisoon',
               style: AppStyle.sectionTitle.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -35,7 +32,7 @@ class PowerComparisonCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-      
+
             // 2. Legend Right-Aligned (Right above the chart grid)
             Align(
               alignment: Alignment.centerRight,
@@ -72,7 +69,7 @@ class PowerComparisonCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
-      
+
             // 3. Line Chart
             timeLabels != null
                 ? PowerLineChart(timeLabels: timeLabels!)

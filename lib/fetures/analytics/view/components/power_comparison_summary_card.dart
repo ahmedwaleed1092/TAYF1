@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gap/flutter_gap.dart';
-import 'package:tayf/core/theme/app_colors.dart';
 import 'package:tayf/core/theme/app_style.dart';
 
 class PowerComparisonSummaryCard extends StatelessWidget {
@@ -33,15 +32,9 @@ class PowerComparisonSummaryCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Expected Power',
-                    style: AppStyle.caption,
-                  ),
+                  Text('Expected Power', style: AppStyle.caption),
                   const Gap(12),
-                  Text(
-                    '$expectedPower KW',
-                    style: AppStyle.metricValue,
-                  ),
+                  Text('$expectedPower KW', style: AppStyle.metricValue),
                 ],
               ),
             ),
@@ -51,15 +44,9 @@ class PowerComparisonSummaryCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Actual Power',
-                    style: AppStyle.caption,
-                  ),
+                  Text('Actual Power', style: AppStyle.caption),
                   const Gap(12),
-                  Text(
-                    '$actualPower KW',
-                    style: AppStyle.metricValue,
-                  ),
+                  Text('$actualPower KW', style: AppStyle.metricValue),
                 ],
               ),
             ),
@@ -69,10 +56,7 @@ class PowerComparisonSummaryCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    'Deviation',
-                    style: AppStyle.caption,
-                  ),
+                  Text('Deviation', style: AppStyle.caption),
                   const Gap(12),
                   Text(
                     deviation,

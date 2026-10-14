@@ -46,5 +46,5 @@ class ApiConstant {
   static const String aihatBaseUrl = "http://13.53.182.194:8000/api";
 
   static const String getAlerts =
-      "https://tayfbackend-production.up.railway.app/api/v1/Alerts";
+      "https://tayfbackend-production-e4fd.up.railway.app/api/v1/Alerts";
 }

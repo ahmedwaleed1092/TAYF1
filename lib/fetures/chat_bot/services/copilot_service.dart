@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:tayf/core/api/api_helper.dart';
 
 class CopilotService {

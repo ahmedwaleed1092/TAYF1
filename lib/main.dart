@@ -12,7 +12,7 @@ import 'package:tayf/fetures/home/cubit/wither_cubit.dart';
 import 'package:tayf/fetures/performance/presentation/cubit/sensor_cubit.dart';
 import 'package:tayf/fetures/performance/service/swnsor_stream__service.dart';
 import 'package:tayf/fetures/smart_alarts/cubit/alerts_cubit.dart';
-import 'package:tayf/fetures/splash/view/presentation/splash_screen.dart';
+import 'package:tayf/fetures/soillingAnalysis/cubit/soilling_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +48,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<FinancialLossCubit>(
           create: (context) => FinancialLossCubit(),
+        ),
+        BlocProvider<SoilingCubit>(
+          create: (context) => SoilingCubit()..getSoilingStatus(),
         ),
         BlocProvider<SensorCubit>(
           create: (context) => SensorCubit(SensorStreamService())..start(),

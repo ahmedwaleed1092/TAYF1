@@ -1,8 +1,9 @@
+import 'package:equatable/equatable.dart';
 import 'package:tayf/fetures/performance/model/sensior_reading.dart';
 
 enum SensorStatus { initial, connecting, live, error }
 
-class SensorState {
+class SensorState extends Equatable {
   final SensorStatus status;
   final SensorReading? latest;
   final List<SensorReading> history;
@@ -26,4 +27,7 @@ class SensorState {
     history: history ?? this.history,
     error: error,
   );
+
+  @override
+  List<Object?> get props => [status, latest, history, error];
 }

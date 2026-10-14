@@ -13,7 +13,7 @@ class TelemetryService {
   }) async {
     final response = await DioHelper.getData(
       endPoints:
-          'https://tayfbackend-production.up.railway.app/api/v1/Telemetry',
+          'https://tayfbackend-production-e4fd.up.railway.app/api/v1/Telemetry',
       query: {
         'PlantId': plantId,
         'InverterId': inverterId,
